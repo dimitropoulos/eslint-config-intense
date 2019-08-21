@@ -3,6 +3,7 @@
 const OFF = 'off';
 const WARN = 'warn';
 const ERROR = 'error';
+const DEPRECATED = 'off';
 const UNKNOWN = 'off'; // useful when adding new rules at once.  I first write in all the rules and set them to UNKNOWN and then change them to OFF, WARN, or ERROR as I individually address them.
 
 module.exports = {
@@ -142,7 +143,7 @@ module.exports = {
     'prefer-named-capture-group': OFF,
     'prefer-promise-reject-errors': ERROR,
     'radix': ERROR,
-    'require-await': OFF, // The primary problem here is that often you need a function to satisfy a certain interface that may require async behavior.  Some implementations may simply just not require async behavior (i.e. awaiting) while others absolutely do.
+    'require-await': OFF, // see `typescript-eslint/require-await`
     'require-unicode-regexp': OFF,
     'vars-on-top': ERROR,
     'wrap-iife': ERROR,
@@ -399,8 +400,11 @@ module.exports = {
         'Object': "usage of Object is too wide.  If you really don't know then use `any` or `unknown` instead.",
       },
     }],
+    '@typescript-eslint/no-floating-promises': ERROR,
     '@typescript-eslint/camelcase': OFF, // this is handled by the babel plugin
     '@typescript-eslint/class-name-casing': ERROR,
+    '@typescript-eslint/consistent-type-assertions': ERROR,
+    '@typescript-eslint/consistent-type-definitions': [ERROR, 'interface'],
     '@typescript-eslint/explicit-function-return-type': OFF, // type inference is your friend.  use it.
     '@typescript-eslint/explicit-member-accessibility': OFF, // I'm going to wait to see how the TC-39 proposal for `#` to denote private class members comes together.
     '@typescript-eslint/func-call-spacing': ERROR,
@@ -410,8 +414,8 @@ module.exports = {
     '@typescript-eslint/member-delimiter-style': ERROR,
     '@typescript-eslint/member-naming': OFF, // I'm going to wait to see how the TC-39 proposal for `#` to denote private class members comes together.
     '@typescript-eslint/member-ordering': ERROR,
-    '@typescript-eslint/no-angle-bracket-type-assertion': ERROR,
     '@typescript-eslint/no-array-constructor': ERROR,
+    '@typescript-eslint/no-empty-function': OFF, // the usefullness of noop functions in functional programming aside, I think the UX of having every function at some point (while you're writing it) trigger this error is more harm than the rule is worth
     '@typescript-eslint/no-empty-interface': OFF, // Often has legitimate use when mocking out an API or showing intent
     '@typescript-eslint/no-explicit-any': OFF, // I look forward to the day when I can confidently write Elm **cough** I mean TypeScript this way
     '@typescript-eslint/no-extra-parens': OFF, // I find that often parens are used to make the intention of the author clearer in a world where ternarys are fully embraced.
@@ -419,15 +423,15 @@ module.exports = {
     '@typescript-eslint/no-for-in-array': ERROR,
     '@typescript-eslint/no-inferrable-types': ERROR,
     '@typescript-eslint/no-misused-new': ERROR,
+    '@typescript-eslint/no-misused-promises': ERROR,
     '@typescript-eslint/no-namespace': ERROR,
     '@typescript-eslint/no-non-null-assertion': ERROR, // I'll quote a friend (who is a better programmer than I am) about the non null assertion: "I wish I never learnd of its existence."  Indeed, I view this character as a member of the same family as `any` and `@ts-ignore`.
-    '@typescript-eslint/no-object-literal-type-assertion': ERROR,
     '@typescript-eslint/no-parameter-properties': ERROR,
     '@typescript-eslint/no-require-imports': ERROR,
     '@typescript-eslint/no-this-alias': ERROR,
-    '@typescript-eslint/no-triple-slash-reference': ERROR,
     '@typescript-eslint/no-type-alias': OFF, // The absence of Opaque types in TypeScript is the only remaining feature I miss from FlowType.  Until such a thing is implemented some day (and we seem to get closer every major release) I will continue to use aliases for primitive types.
     '@typescript-eslint/no-unnecessary-qualifier': ERROR,
+    '@typescript-eslint/no-unnecessary-type-arguments': ERROR,
     '@typescript-eslint/no-unnecessary-type-assertion': ERROR,
     '@typescript-eslint/no-unused-vars': ERROR,
     '@typescript-eslint/no-use-before-define': ERROR,
@@ -436,15 +440,20 @@ module.exports = {
     '@typescript-eslint/prefer-for-of': ERROR,
     '@typescript-eslint/prefer-function-type': OFF, // Certain abstractions read clearer when documented by interfaces, even those with only one call signature
     '@typescript-eslint/prefer-includes': ERROR,
-    '@typescript-eslint/prefer-interface': ERROR,
     '@typescript-eslint/prefer-namespace-keyword': OFF, // in facor of
+    '@typescript-eslint/prefer-readonly': ERROR, // abiding by this rule will ease transition to the private methods proposal https://github.com/tc39/proposal-private-methods which, because it's at stage 3, will be in the language
+    '@typescript-eslint/prefer-regexp-exec': ERROR,
     '@typescript-eslint/prefer-string-starts-ends-with': ERROR,
     '@typescript-eslint/promise-function-async': OFF, // situations were Promise.all is involved make this one tricky to follow in practice whilst keeping the right semantics of using regular promise calls.
     '@typescript-eslint/require-array-sort-compare': ERROR,
+    '@typescript-eslint/require-await': OFF, // The primary problem here is that often you need a function to satisfy a certain interface that may require async behavior.  Some implementations may simply just not require async behavior (i.e. awaiting) while others absolutely do.
     '@typescript-eslint/restrict-plus-operands': ERROR,
     '@typescript-eslint/semi': ERROR,
+    '@typescript-eslint/strict-boolean-expressions': ERROR,
+    '@typescript-eslint/triple-slash-reference': ERROR,
     '@typescript-eslint/type-annotation-spacing': ERROR,
-    // '@typescript-eslint/unbound-method': ERROR, // doesn't work in `v1.7.1-alpha.18`.  throws `TypeError: Cannot read property 'kind' of undefined`
+    '@typescript-eslint/typedef': ERROR,
+    '@typescript-eslint/unbound-method': ERROR,
     '@typescript-eslint/unified-signatures': ERROR,
 
     // plugin:react ************************************************************
@@ -504,6 +513,7 @@ module.exports = {
     'react/jsx-closing-bracket-location': ERROR,
     'react/jsx-closing-tag-location': ERROR,
     'react/jsx-curly-brace-presence': ERROR,
+    'react/jsx-curly-new-line': OFF, // reasonable people disagree but I think this can be left up to the developer, although I don't feel strongly.  If there was a "if the first predicate is x number of characters long" option, I would feel differently.
     'react/jsx-curly-spacing': ERROR,
     'react/jsx-equals-spacing': ERROR,
     'react/jsx-filename-extension': [ERROR, { 'extensions': ['.jsx', '.tsx']}],
@@ -588,34 +598,40 @@ module.exports = {
     'jest/expect-expect': ERROR,
     'jest/lowercase-name': ERROR,
     'jest/no-alias-methods': ERROR,
-    'jest/no-disabled-tests': OFF, // I think having the ability to use .skip is legitimate
     'jest/no-commented-out-tests': ERROR,
+    'jest/no-disabled-tests': OFF, // I think having the ability to use .skip is legitimate
+    'jest/no-duplicate-hooks': ERROR,
     'jest/no-empty-title': ERROR,
+    'jest/no-expect-resolves': ERROR,
+    'jest/no-export': ERROR,
     'jest/no-focused-tests': ERROR,
     'jest/no-hooks': ERROR,
     'jest/no-identical-title': ERROR,
+    'jest/no-if': ERROR,
     'jest/no-jasmine-globals': ERROR,
     'jest/no-jest-import': ERROR,
-    'jest/no-mocks-import': ERROR,
     'jest/no-large-snapshots': ERROR,
+    'jest/no-mocks-import': ERROR,
+    'jest/no-standalone-expect': ERROR,
     'jest/no-test-callback': ERROR,
     'jest/no-test-prefixes': ERROR,
     'jest/no-test-return-statement': ERROR,
     'jest/no-truthy-falsy': ERROR,
+    'jest/no-try-expect': ERROR,
+    'jest/prefer-called-with': ERROR,
     'jest/prefer-expect-assertions': OFF, // I really just don't see the value of having this rule.
+    'jest/prefer-inline-snapshots': ERROR,
     'jest/prefer-spy-on': ERROR,
     'jest/prefer-strict-equal': ERROR,
     'jest/prefer-to-be-null': ERROR,
     'jest/prefer-to-be-undefined': ERROR,
     'jest/prefer-to-contain': ERROR,
     'jest/prefer-to-have-length': ERROR,
-    'jest/prefer-inline-snapshots': ERROR,
+    'jest/prefer-todo': ERROR,
     'jest/require-tothrow-message': ERROR,
     'jest/valid-describe': ERROR,
-    'jest/valid-expect-in-promise': ERROR,
     'jest/valid-expect': ERROR,
-    'jest/prefer-todo': ERROR,
-    'jest/prefer-called-with': ERROR,
+    'jest/valid-expect-in-promise': ERROR,
 
     // plugin:jest-formatting **************************************************
     'jest-formatting/padding-before-test-blocks': ERROR,
