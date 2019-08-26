@@ -28,6 +28,7 @@ module.exports = {
     'eslint-comments',
     'ramda',
     'react',
+    'react-hooks',
     'import',
     'jest',
     'jest-formatting',
@@ -541,6 +542,10 @@ module.exports = {
     'react/jsx-uses-react': ERROR,
     'react/jsx-uses-vars': ERROR,
     'react/jsx-wrap-multilines': ERROR,
+
+    // plugin:react-hooks ******************************************************
+    'react-hooks/rules-of-hooks': ERROR, // Checks rules of Hooks
+    'react-hooks/exhaustive-deps': ERROR, // Checks effect dependencies
 
     // plugin:import ***********************************************************
     // Static analysis
