@@ -38,6 +38,7 @@ module.exports = {
     // plugin:eslint ******************************************************************
     // rules URL: https://github.com/eslint/eslint/tree/master/docs/rules
     // Possible Errors
+    'default-param-last': ERROR,
     'for-direction': ERROR,
     'getter-return': ERROR,
     'no-async-promise-executor': ERROR,
@@ -58,6 +59,7 @@ module.exports = {
     'no-extra-parens': OFF, // handled by `@typescript-eslint/no-extra-parens`
     'no-extra-semi': ERROR,
     'no-func-assign': ERROR,
+    'no-import-assign': ERROR,
     'no-inner-declarations': OFF, // doesn't play nice with namespaces https://github.com/typescript-eslint/typescript-eslint/issues/239
     'no-invalid-regexp': ERROR,
     'no-irregular-whitespace': ERROR,
@@ -144,6 +146,7 @@ module.exports = {
     'no-with': ERROR,
     'prefer-named-capture-group': OFF,
     'prefer-promise-reject-errors': ERROR,
+    'prefer-regex-literals': ERROR,
     'radix': ERROR,
     'require-await': OFF, // see `typescript-eslint/require-await`
     'require-unicode-regexp': OFF,
@@ -198,6 +201,7 @@ module.exports = {
     'func-name-matching': ERROR,
     'func-names': UNKNOWN,
     'func-style': [ERROR, 'declaration', { 'allowArrowFunctions': true }],
+    'function-call-argument-newline': OFF, // [handled by prettier] not really significant anyway
     'function-paren-newline': OFF,
     'id-blacklist': OFF,
     'id-length': [ERROR, {
@@ -407,7 +411,7 @@ module.exports = {
         'Object': "usage of Object is too wide.  If you really don't know then use `any` or `unknown` instead.",
       },
     }],
-    '@typescript-eslint/no-floating-promises': ERROR,
+    '@typescript-eslint/brace-style': UNKNOWN,
     '@typescript-eslint/camelcase': OFF, // this is handled by the babel plugin
     '@typescript-eslint/class-name-casing': ERROR,
     '@typescript-eslint/consistent-type-assertions': ERROR,
@@ -427,8 +431,10 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': OFF, // I look forward to the day when I can confidently write Elm **cough** I mean TypeScript this way
     '@typescript-eslint/no-extra-parens': OFF, // I find that often parens are used to make the intention of the author clearer in a world where ternarys are fully embraced.
     '@typescript-eslint/no-extraneous-class': ERROR,
+    '@typescript-eslint/no-floating-promises': ERROR,
     '@typescript-eslint/no-for-in-array': ERROR,
     '@typescript-eslint/no-inferrable-types': ERROR,
+    '@typescript-eslint/no-magic-numbers': UNKNOWN,
     '@typescript-eslint/no-misused-new': ERROR,
     '@typescript-eslint/no-misused-promises': ERROR,
     '@typescript-eslint/no-namespace': ERROR,
@@ -437,6 +443,7 @@ module.exports = {
     '@typescript-eslint/no-require-imports': ERROR,
     '@typescript-eslint/no-this-alias': ERROR,
     '@typescript-eslint/no-type-alias': OFF, // The absence of Opaque types in TypeScript is the only remaining feature I miss from FlowType.  Until such a thing is implemented some day (and we seem to get closer every major release) I will continue to use aliases for primitive types.
+    '@typescript-eslint/no-unnecessary-condition': UNKNOWN,
     '@typescript-eslint/no-unnecessary-qualifier': ERROR,
     '@typescript-eslint/no-unnecessary-type-arguments': ERROR,
     '@typescript-eslint/no-unnecessary-type-assertion': ERROR,
@@ -452,6 +459,7 @@ module.exports = {
     '@typescript-eslint/prefer-regexp-exec': ERROR,
     '@typescript-eslint/prefer-string-starts-ends-with': ERROR,
     '@typescript-eslint/promise-function-async': OFF, // situations were Promise.all is involved make this one tricky to follow in practice whilst keeping the right semantics of using regular promise calls.
+    '@typescript-eslint/quotes': UNKNOWN,
     '@typescript-eslint/require-array-sort-compare': ERROR,
     '@typescript-eslint/require-await': OFF, // The primary problem here is that often you need a function to satisfy a certain interface that may require async behavior.  Some implementations may simply just not require async behavior (i.e. awaiting) while others absolutely do.
     '@typescript-eslint/restrict-plus-operands': ERROR,
@@ -521,7 +529,7 @@ module.exports = {
     'react/jsx-closing-bracket-location': ERROR,
     'react/jsx-closing-tag-location': ERROR,
     'react/jsx-curly-brace-presence': ERROR,
-    'react/jsx-curly-new-line': OFF, // reasonable people disagree but I think this can be left up to the developer, although I don't feel strongly.  If there was a "if the first predicate is x number of characters long" option, I would feel differently.
+    'react/jsx-curly-newline': OFF, // reasonable people disagree but I think this can be left up to the developer, although I don't feel strongly.  If there was a "if the first predicate is x number of characters long" option, I would feel differently.
     'react/jsx-curly-spacing': ERROR,
     'react/jsx-equals-spacing': ERROR,
     'react/jsx-filename-extension': [ERROR, { 'extensions': ['.jsx', '.tsx']}],
@@ -539,6 +547,7 @@ module.exports = {
     'react/jsx-no-literals': OFF, // yeah... this rule shouldn't exist - we should just fix the syntax highlighters.
     'react/jsx-no-target-blank': ERROR,
     'react/jsx-no-undef': ERROR,
+    'react/jsx-no-useless-fragment': ERROR,
     'react/jsx-one-expression-per-line': OFF, // I don't see the value here.
     'react/jsx-pascal-case': ERROR,
     'react/jsx-props-no-multi-spaces': ERROR,
@@ -558,6 +567,7 @@ module.exports = {
     // plugin:import ***********************************************************
     // Static analysis
     // rules URL: https://github.com/benmosher/eslint-plugin-import#rules
+    'import/no-unresolved': OFF, // [ERROR, { 'amd': true, 'commonjs': true }], // can't get this to work
     'import/default': ERROR,
     'import/named': ERROR,
     'import/namespace': ERROR,
@@ -568,6 +578,7 @@ module.exports = {
     'import/no-relative-parent-imports': OFF, // I don't see the value in this one.
     'import/no-restricted-paths': ERROR,
     'import/no-self-import': ERROR,
+    'import/no-unused-modules': ERROR,
     'import/no-useless-path-segments': ERROR,
     'import/no-webpack-loader-syntax': OFF, // this is a project-by-project need
 
@@ -635,6 +646,7 @@ module.exports = {
     'jest/no-try-expect': ERROR,
     'jest/prefer-called-with': ERROR,
     'jest/prefer-expect-assertions': OFF, // I really just don't see the value of having this rule.
+    'jest/prefer-hooks-on-top': ERROR,
     'jest/prefer-inline-snapshots': ERROR,
     'jest/prefer-spy-on': ERROR,
     'jest/prefer-strict-equal': ERROR,
@@ -643,14 +655,32 @@ module.exports = {
     'jest/prefer-to-contain': ERROR,
     'jest/prefer-to-have-length': ERROR,
     'jest/prefer-todo': ERROR,
+    'jest/require-top-level-describe': ERROR,
     'jest/require-tothrow-message': ERROR,
     'jest/valid-describe': ERROR,
     'jest/valid-expect': ERROR,
     'jest/valid-expect-in-promise': ERROR,
+    'jest/valid-title': ERROR,
 
     // plugin:jest-formatting **************************************************
     // rules URL: https://github.com/dangreenisrael/eslint-plugin-jest-formatting#rule-documentation
-    'jest-formatting/padding-before-describe-blocks': ERROR,
+    'jest-formatting/padding-around-after-all-blocks': ERROR,
+    'jest-formatting/padding-around-after-each-blocks': ERROR,
+    'jest-formatting/padding-around-before-all-blocks': ERROR,
+    'jest-formatting/padding-around-before-each-blocks': ERROR,
+    'jest-formatting/padding-around-describe-blocks': ERROR,
+    'jest-formatting/padding-around-expect-groups': ERROR,
+    'jest-formatting/padding-around-test-blocks': ERROR,
+
+    // deprecated but not marked as such correctly: https://github.com/dangreenisrael/eslint-plugin-jest-formatting/pull/76
+    'jest-formatting/padding-before-after-all-blocks': OFF,
+    'jest-formatting/padding-before-after-each-blocks': OFF,
+    'jest-formatting/padding-before-all': OFF,
+    'jest-formatting/padding-before-before-all-blocks': OFF,
+    'jest-formatting/padding-before-before-each-blocks': OFF,
+    'jest-formatting/padding-before-describe-blocks': OFF,
+    'jest-formatting/padding-before-expect-statements': OFF,
+    'jest-formatting/padding-before-test-blocks': OFF,
   },
   'settings': {
     'react': {
