@@ -35,7 +35,8 @@ module.exports = {
     'simple-import-sort',
   ],
   'rules': {
-    // eslint ******************************************************************
+    // plugin:eslint ******************************************************************
+    // rules URL: https://github.com/eslint/eslint/tree/master/docs/rules
     // Possible Errors
     'for-direction': ERROR,
     'getter-return': ERROR,
@@ -336,6 +337,7 @@ module.exports = {
     'yield-star-spacing': ERROR,
 
     // plugin:ramda ************************************************************
+    // rules URL: https://github.com/ramda/eslint-plugin-ramda
     'ramda/always-simplification': ERROR,
     'ramda/any-pass-simplification': ERROR,
     'ramda/both-simplification': ERROR,
@@ -364,6 +366,7 @@ module.exports = {
     'ramda/when-simplification': ERROR,
 
     // plugin:babel ************************************************************
+    // rules URL: https://github.com/babel/eslint-plugin-babel
     'babel/camelcase': OFF, // too many standards that matter (e.g. react components absolutely must start with a capital letter) exist that foil this plan.
     'babel/new-cap': OFF, // `new` should, these days, basically not be used.
     'babel/no-invalid-this': ERROR,
@@ -374,6 +377,7 @@ module.exports = {
     'babel/valid-typeof': ERROR,
 
     // plugin:eslint-comments **************************************************
+    // rules URL: https://github.com/mysticatea/eslint-plugin-eslint-comments/tree/master/docs/rules
     'eslint-comments/disable-enable-pair': ERROR,
     'eslint-comments/no-aggregating-enable': ERROR,
     'eslint-comments/no-duplicate-disable': ERROR,
@@ -384,9 +388,11 @@ module.exports = {
     'eslint-comments/no-use': OFF, // exceptions exist.  it's javascript, after all.
 
     // plugin:no-secrets *******************************************************
+    // rules URL: https://github.com/nickdeis/eslint-plugin-no-secrets
     'no-secrets/no-secrets': [ERROR, { 'tolerance': 6 }],
 
     // plugin:@typescript-eslint ***********************************************
+    // rules URL: https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin
     '@typescript-eslint/adjacent-overload-signatures': ERROR,
     '@typescript-eslint/array-type': ERROR,
     '@typescript-eslint/await-thenable': ERROR,
@@ -458,6 +464,7 @@ module.exports = {
     '@typescript-eslint/unified-signatures': ERROR,
 
     // plugin:react ************************************************************
+    // rules URL: https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
     'react/boolean-prop-naming': OFF, // I'll name my variables whatever I wish thank you very much
     'react/button-has-type': ERROR,
     'react/default-props-match-prop-types': OFF, // #ProptypesAreDead
@@ -544,12 +551,13 @@ module.exports = {
     'react/jsx-wrap-multilines': ERROR,
 
     // plugin:react-hooks ******************************************************
+    // rules URL: https://github.com/facebook/react/tree/master/packages/eslint-plugin-react-hooks
     'react-hooks/rules-of-hooks': ERROR, // Checks rules of Hooks
     'react-hooks/exhaustive-deps': ERROR, // Checks effect dependencies
 
     // plugin:import ***********************************************************
     // Static analysis
-    // 'import/no-unresolved': [ERROR, { 'amd': true, 'commonjs': true }], // can't get this to work
+    // rules URL: https://github.com/benmosher/eslint-plugin-import#rules
     'import/default': ERROR,
     'import/named': ERROR,
     'import/namespace': ERROR,
@@ -596,9 +604,11 @@ module.exports = {
     'import/prefer-default-export': OFF, // named exports are better (for one reason, because TypeScript can automatically import a named resource)
 
     // plugin:simple-import-sort ***********************************************
+    // rules URL: https://github.com/lydell/eslint-plugin-simple-import-sort
     'simple-import-sort/sort': OFF, // annoying? yes.  helps keep code extremely consistent? also yes.  OFF, though, for now, until the tooling can improve
 
     // plugin:jest *************************************************************
+    // rules URL: https://github.com/jest-community/eslint-plugin-jest#rules
     'jest/consistent-test-it': ERROR,
     'jest/expect-expect': ERROR,
     'jest/lowercase-name': ERROR,
@@ -639,7 +649,7 @@ module.exports = {
     'jest/valid-expect-in-promise': ERROR,
 
     // plugin:jest-formatting **************************************************
-    'jest-formatting/padding-before-test-blocks': ERROR,
+    // rules URL: https://github.com/dangreenisrael/eslint-plugin-jest-formatting#rule-documentation
     'jest-formatting/padding-before-describe-blocks': ERROR,
   },
   'settings': {
