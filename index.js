@@ -671,16 +671,7 @@ module.exports = {
     'jest-formatting/padding-around-describe-blocks': ERROR,
     'jest-formatting/padding-around-expect-groups': ERROR,
     'jest-formatting/padding-around-test-blocks': ERROR,
-
-    // deprecated but not marked as such correctly: https://github.com/dangreenisrael/eslint-plugin-jest-formatting/pull/76
-    'jest-formatting/padding-before-after-all-blocks': OFF,
-    'jest-formatting/padding-before-after-each-blocks': OFF,
-    'jest-formatting/padding-before-all': OFF,
-    'jest-formatting/padding-before-before-all-blocks': OFF,
-    'jest-formatting/padding-before-before-each-blocks': OFF,
-    'jest-formatting/padding-before-describe-blocks': OFF,
-    'jest-formatting/padding-before-expect-statements': OFF,
-    'jest-formatting/padding-before-test-blocks': OFF,
+    'jest-formatting/padding-around-all': OFF, // already handled by the individual rules above.
   },
   'settings': {
     'react': {
