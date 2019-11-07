@@ -403,12 +403,21 @@ module.exports = {
     '@typescript-eslint/ban-ts-ignore': OFF, // I wish.. but in my experience there still exist edge cases where it's necessary to use a @ts-ignore
     '@typescript-eslint/ban-types': [ERROR, {
       'types': {
-        'String': {
-          'message': 'use `string` instead',
-          'fixWith': 'string',
+        Array: {
+          fixWith: 'any[]',
+          message: 'use something like `any[]` instead',
         },
-        'Array': 'use something like `any[]` instead',
-        'Object': "usage of Object is too wide.  If you really don't know then use `any` or `unknown` instead.",
+        Function: {
+          message: 'use a more specific type, such as `() => void`, `() => any`, `(any: any) => void`, etc.',
+        },
+        Object: {
+          fixWith: '{}',
+          message: "usage of Object is too wide.  If you really don't know then use `any` or `unknown` instead.",
+        },
+        String: {
+          fixWith: 'string',
+          message: 'use `string` instead',
+        },
       },
     }],
     '@typescript-eslint/brace-style': UNKNOWN,
