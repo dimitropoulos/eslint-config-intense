@@ -645,7 +645,6 @@ module.exports = {
     'jest/no-commented-out-tests': ERROR,
     'jest/no-disabled-tests': OFF, // I think having the ability to use .skip is legitimate
     'jest/no-duplicate-hooks': ERROR,
-    'jest/no-empty-title': ERROR,
     'jest/no-expect-resolves': ERROR,
     'jest/no-export': ERROR,
     'jest/no-focused-tests': ERROR,
