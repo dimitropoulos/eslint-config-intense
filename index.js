@@ -67,6 +67,7 @@ module.exports = {
     'no-obj-calls': ERROR,
     'no-prototype-builtins': ERROR,
     'no-regex-spaces': ERROR,
+    'no-setter-return': ERROR,
     'no-sparse-arrays': ERROR,
     'no-template-curly-in-string': ERROR,
     'no-unexpected-multiline': ERROR,
@@ -75,7 +76,7 @@ module.exports = {
     'no-unsafe-negation': ERROR,
     'require-atomic-updates': ERROR,
     'use-isnan': ERROR,
-    'valid-typeof': OFF, // handled by the babel plugin
+    'valid-typeof': OFF, // handled by `babel/valid-typeof`
 
     // Best Practices
     'accessor-pairs': ERROR,
@@ -89,11 +90,13 @@ module.exports = {
     'dot-location': [ERROR, 'property'],
     'dot-notation': ERROR,
     'eqeqeq': ERROR,
+    'grouped-accessor-pairs': ERROR,
     'guard-for-in': ERROR,
     'max-classes-per-file': [WARN, 3],
     'no-alert': ERROR,
     'no-caller': ERROR,
     'no-case-declarations': ERROR,
+    'no-constructor-return': ERROR,
     'no-div-regex': ERROR,
     'no-else-return': ERROR,
     'no-empty-function': OFF,
@@ -109,12 +112,12 @@ module.exports = {
     'no-implicit-coercion': ERROR,
     'no-implicit-globals': ERROR,
     'no-implied-eval': ERROR,
-    'no-invalid-this': OFF, // handled by the babel plugin
+    'no-invalid-this': OFF, // handled by `babel/no-invalid-this`
     'no-iterator': ERROR,
     'no-labels': ERROR,
     'no-lone-blocks': ERROR,
     'no-loop-func': ERROR,
-    'no-magic-numbers': OFF, // sounds good in theory, but works poorly in practice
+    'no-magic-numbers': OFF, // handled by `@typescript-eslint/no-magic-numbers`
     'no-multi-spaces': ERROR,
     'no-multi-str': ERROR,
     'no-new': ERROR,
@@ -134,7 +137,7 @@ module.exports = {
     'no-sequences': ERROR,
     'no-throw-literal': ERROR,
     'no-unmodified-loop-condition': ERROR,
-    'no-unused-expressions': OFF, // handled by the babel plugin
+    'no-unused-expressions': OFF, // handled by `@typescript-eslint/no-unused-expressions`
     'no-unused-labels': ERROR,
     'no-useless-call': ERROR,
     'no-useless-catch': ERROR,
@@ -188,8 +191,8 @@ module.exports = {
     'array-bracket-spacing': [ERROR, 'never'],
     'array-element-newline': [ERROR, 'consistent'],
     'block-spacing': ERROR,
-    'brace-style': [ERROR, '1tbs'],
-    'camelcase': OFF, // handled by the babel plugin
+    'brace-style': OFF, // handled by `@typescript-eslint/brace-style`
+    'camelcase': OFF, // handled by `babel/camelcase`
     'capitalized-comments': OFF, // the reality is that to many things exist in comments that should not be bound by rules (compiler directives, jsDoc, type information, etc.)
     'comma-dangle': [ERROR, 'always-multiline'],
     'comma-spacing': ERROR,
@@ -199,7 +202,7 @@ module.exports = {
     'eol-last': ERROR,
     'func-call-spacing': OFF, // doesn't work with typescript and generics
     'func-name-matching': ERROR,
-    'func-names': UNKNOWN,
+    'func-names': UNKNOWN, // still thinking about the implications of this one
     'func-style': [ERROR, 'declaration', { 'allowArrowFunctions': true }],
     'function-call-argument-newline': OFF, // [handled by prettier] not really significant anyway
     'function-paren-newline': OFF,
@@ -245,7 +248,7 @@ module.exports = {
     'max-statements-per-line': [ERROR, { 'max': 2 }],
     'multiline-comment-style': OFF, // The programmer should be free to comment code how they like (that is to say, almost never).
     'multiline-ternary': OFF, // Too many "legit" patterns exist on both sides of this fence.  For example JSX should most often be multiline, but short values should most often be single line.
-    'new-cap': OFF, // handled by the babel plugin
+    'new-cap': OFF, // handled by `babel/new-cap`
     'new-parens': OFF, // If everyone was doing this I would go along with it, but it's borderline inconsequential since usage of `new` should be very sparing.
     'newline-per-chained-call': ERROR,
     'no-array-constructor': ERROR,
@@ -261,9 +264,7 @@ module.exports = {
     'no-nested-ternary': ERROR,
     'no-new-object': ERROR,
     'no-plusplus': ERROR,
-    'no-restricted-syntax': [ERROR,
-      "BinaryExpression[operator='in']", // I've seen quite a few bugs from junior developers that use the `in` operator as a kind of null check (for example in an `if statement`) while not realizing how the operator really works.
-    ],
+    'no-restricted-syntax': [ERROR, "BinaryExpression[operator='in']"], // I've seen quite a few bugs from junior developers that use the `in` operator as a kind of null check (for example in an `if statement`) while not realizing how the operator really works.
     'no-tabs': ERROR,
     'no-ternary': OFF, // ternarys are more complex, yes, but it's a level of complexity I think is more than acceptable in the context of the kinds of functional programming usecases this config is intended for.
     'no-trailing-spaces': ERROR,
@@ -280,20 +281,17 @@ module.exports = {
     'operator-linebreak': OFF, // too many edge cases here, unfortunately.
     'padded-blocks': OFF, // there are situations where this helps and situations where it doesn't.
     'padding-line-between-statements': OFF,
+    'prefer-exponentiation-operator': ERROR,
     'prefer-object-spread': ERROR,
     'quote-props': [ERROR, 'as-needed', { 'numbers': true }], // I have at times used the `'numbers': false` option, but I have learned that some people are not aware that object keys can only ever be strings in javascript (well, or symbols, but anyway). Despite
-    'quotes': OFF, // handled by the babel plugin
-    'semi': OFF, // handled by babel plugin
+    'quotes': OFF, // handled by `@typescript-eslint/quotes`
+    'semi': OFF, // handled by `@typescript-eslint/semi`
     'semi-spacing': ERROR,
     'semi-style': ERROR,
     'sort-keys': ERROR, // call me crazy, go ahead.  The reason I think this rule is helpful is because often junior programmers will rely on the order of object properties despite that an object is an unordered collection according to the javascript spec.  This also therefore prevents a footgun where some browsers (e.g. chrome) respect insertion order, but others (e.g. safari) do not.
     'sort-vars': ERROR, // multiple declaration is turned off anyway.
     'space-before-blocks': ERROR,
-    'space-before-function-paren': [ERROR, {
-      'anonymous': 'never',
-      'named': 'never',
-      'asyncArrow': 'always',
-    }],
+    'space-before-function-paren': OFF, // handled by `@typescript-eslint/space-before-function-paren`
     'space-in-parens': ERROR,
     'space-infix-ops': ERROR,
     'space-unary-ops': ERROR,
@@ -317,6 +315,7 @@ module.exports = {
     'no-confusing-arrow': [ERROR, { 'allowParens': true }],
     'no-const-assign': ERROR,
     'no-dupe-class-members': ERROR,
+    'no-dupe-else-if': ERROR,
     'no-duplicate-imports': ERROR,
     'no-new-symbol': ERROR,
     'no-restricted-imports': OFF, // this is a project-by-project kind of rule
@@ -374,10 +373,10 @@ module.exports = {
     'babel/camelcase': OFF, // too many standards that matter (e.g. react components absolutely must start with a capital letter) exist that foil this plan.
     'babel/new-cap': OFF, // `new` should, these days, basically not be used.
     'babel/no-invalid-this': ERROR,
-    'babel/no-unused-expressions': ERROR,
+    'babel/no-unused-expressions': OFF, // handled by @typescript-eslint/no-unused-expressions
     'babel/object-curly-spacing': [WARN, 'always', { 'arraysInObjects': true }],
-    'babel/quotes': [ERROR, 'single', { 'avoidEscape': true }],
-    'babel/semi': OFF, // handled by `typescript-eslint:semi`
+    'babel/quotes': OFF, // handled by `@typescript-eslint/quotes`
+    'babel/semi': OFF, // handled by `@typescript-eslint/semi`
     'babel/valid-typeof': ERROR,
 
     // plugin:eslint-comments **************************************************
@@ -420,7 +419,7 @@ module.exports = {
         },
       },
     }],
-    '@typescript-eslint/brace-style': UNKNOWN,
+    '@typescript-eslint/brace-style': [ERROR, '1tbs'],
     '@typescript-eslint/camelcase': OFF, // this is handled by the babel plugin
     '@typescript-eslint/class-name-casing': ERROR,
     '@typescript-eslint/consistent-type-assertions': ERROR,
@@ -435,15 +434,17 @@ module.exports = {
     '@typescript-eslint/member-naming': OFF, // I'm going to wait to see how the TC-39 proposal for `#` to denote private class members comes together.
     '@typescript-eslint/member-ordering': ERROR,
     '@typescript-eslint/no-array-constructor': ERROR,
+    '@typescript-eslint/no-dynamic-delete': ERROR,
     '@typescript-eslint/no-empty-function': OFF, // the usefullness of noop functions in functional programming aside, I think the UX of having every function at some point (while you're writing it) trigger this error is more harm than the rule is worth
     '@typescript-eslint/no-empty-interface': OFF, // Often has legitimate use when mocking out an API or showing intent
     '@typescript-eslint/no-explicit-any': OFF, // I look forward to the day when I can confidently write Elm **cough** I mean TypeScript this way
+    '@typescript-eslint/no-extra-non-null-assertion': ERROR, // I really love that this rule had to be made.  `thing!!!!!!!!!!!!!!!.shutUpTypeScript()`, lol.
     '@typescript-eslint/no-extra-parens': OFF, // I find that often parens are used to make the intention of the author clearer in a world where ternarys are fully embraced.
     '@typescript-eslint/no-extraneous-class': ERROR,
     '@typescript-eslint/no-floating-promises': ERROR,
     '@typescript-eslint/no-for-in-array': ERROR,
     '@typescript-eslint/no-inferrable-types': ERROR,
-    '@typescript-eslint/no-magic-numbers': UNKNOWN,
+    '@typescript-eslint/no-magic-numbers': OFF, // sounds good in theory, but works poorly in practice,
     '@typescript-eslint/no-misused-new': ERROR,
     '@typescript-eslint/no-misused-promises': ERROR,
     '@typescript-eslint/no-namespace': ERROR,
@@ -452,11 +453,14 @@ module.exports = {
     '@typescript-eslint/no-require-imports': ERROR,
     '@typescript-eslint/no-this-alias': ERROR,
     '@typescript-eslint/no-type-alias': OFF, // The absence of Opaque types in TypeScript is the only remaining feature I miss from FlowType.  Until such a thing is implemented some day (and we seem to get closer every major release) I will continue to use aliases for primitive types.
-    '@typescript-eslint/no-unnecessary-condition': UNKNOWN,
+    '@typescript-eslint/no-unnecessary-condition': ERROR,
     '@typescript-eslint/no-unnecessary-qualifier': ERROR,
     '@typescript-eslint/no-unnecessary-type-arguments': ERROR,
     '@typescript-eslint/no-unnecessary-type-assertion': ERROR,
+    '@typescript-eslint/no-untyped-public-signature': ERROR,
+    '@typescript-eslint/no-unused-expressions': ERROR,
     '@typescript-eslint/no-unused-vars': ERROR,
+    '@typescript-eslint/no-unused-vars-experimental': ERROR, // This is great because it allows to turn TypeScript's checker off for noUnusedLocals and noUnusedParameters thereby not making the build fail.
     '@typescript-eslint/no-use-before-define': ERROR,
     '@typescript-eslint/no-useless-constructor': ERROR,
     '@typescript-eslint/no-var-requires': ERROR,
@@ -464,15 +468,20 @@ module.exports = {
     '@typescript-eslint/prefer-function-type': OFF, // Certain abstractions read clearer when documented by interfaces, even those with only one call signature
     '@typescript-eslint/prefer-includes': ERROR,
     '@typescript-eslint/prefer-namespace-keyword': OFF, // in facor of
+    '@typescript-eslint/prefer-nullish-coalescing': ERROR,
+    '@typescript-eslint/prefer-optional-chain': ERROR,
     '@typescript-eslint/prefer-readonly': ERROR, // abiding by this rule will ease transition to the private methods proposal https://github.com/tc39/proposal-private-methods which, because it's at stage 3, will be in the language
     '@typescript-eslint/prefer-regexp-exec': ERROR,
     '@typescript-eslint/prefer-string-starts-ends-with': ERROR,
     '@typescript-eslint/promise-function-async': OFF, // situations were Promise.all is involved make this one tricky to follow in practice whilst keeping the right semantics of using regular promise calls.
-    '@typescript-eslint/quotes': UNKNOWN,
+    '@typescript-eslint/quotes': [ERROR, 'single', { 'avoidEscape': true }],
     '@typescript-eslint/require-array-sort-compare': ERROR,
     '@typescript-eslint/require-await': OFF, // The primary problem here is that often you need a function to satisfy a certain interface that may require async behavior.  Some implementations may simply just not require async behavior (i.e. awaiting) while others absolutely do.
     '@typescript-eslint/restrict-plus-operands': ERROR,
+    '@typescript-eslint/restrict-template-expressions': [ERROR, { allowNumber: true }],
+    '@typescript-eslint/return-await': ERROR,
     '@typescript-eslint/semi': ERROR,
+    '@typescript-eslint/space-before-function-paren': [ERROR, { anonymous: 'never', named: 'never', asyncArrow: 'always' }],
     '@typescript-eslint/strict-boolean-expressions': ERROR,
     '@typescript-eslint/triple-slash-reference': ERROR,
     '@typescript-eslint/type-annotation-spacing': ERROR,
@@ -664,8 +673,8 @@ module.exports = {
     'jest/prefer-to-contain': ERROR,
     'jest/prefer-to-have-length': ERROR,
     'jest/prefer-todo': ERROR,
+    'jest/require-to-throw-message': ERROR,
     'jest/require-top-level-describe': ERROR,
-    'jest/require-tothrow-message': ERROR,
     'jest/valid-describe': ERROR,
     'jest/valid-expect': ERROR,
     'jest/valid-expect-in-promise': ERROR,
