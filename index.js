@@ -453,14 +453,14 @@ module.exports = {
     '@typescript-eslint/no-require-imports': ERROR,
     '@typescript-eslint/no-this-alias': ERROR,
     '@typescript-eslint/no-type-alias': OFF, // The absence of Opaque types in TypeScript is the only remaining feature I miss from FlowType.  Until such a thing is implemented some day (and we seem to get closer every major release) I will continue to use aliases for primitive types.
-    '@typescript-eslint/no-unnecessary-condition': ERROR,
+    '@typescript-eslint/no-unnecessary-condition': OFF, // as of @typescript-eslint:2.9.0 this seems to have problems with the nullish coalescing operator
     '@typescript-eslint/no-unnecessary-qualifier': ERROR,
     '@typescript-eslint/no-unnecessary-type-arguments': ERROR,
     '@typescript-eslint/no-unnecessary-type-assertion': ERROR,
-    '@typescript-eslint/no-untyped-public-signature': ERROR,
+    '@typescript-eslint/no-untyped-public-signature': OFF, // I prefer to rely on type inferencing as much as possible
     '@typescript-eslint/no-unused-expressions': ERROR,
     '@typescript-eslint/no-unused-vars': ERROR,
-    '@typescript-eslint/no-unused-vars-experimental': ERROR, // This is great because it allows to turn TypeScript's checker off for noUnusedLocals and noUnusedParameters thereby not making the build fail.
+    '@typescript-eslint/no-unused-vars-experimental': [ERROR, { ignoreArgsIfArgsAfterAreUsed: true }], // This is great because it allows to turn TypeScript's checker off for noUnusedLocals and noUnusedParameters thereby not making the build fail.
     '@typescript-eslint/no-use-before-define': ERROR,
     '@typescript-eslint/no-useless-constructor': ERROR,
     '@typescript-eslint/no-var-requires': ERROR,
@@ -478,7 +478,7 @@ module.exports = {
     '@typescript-eslint/require-array-sort-compare': ERROR,
     '@typescript-eslint/require-await': OFF, // The primary problem here is that often you need a function to satisfy a certain interface that may require async behavior.  Some implementations may simply just not require async behavior (i.e. awaiting) while others absolutely do.
     '@typescript-eslint/restrict-plus-operands': ERROR,
-    '@typescript-eslint/restrict-template-expressions': [ERROR, { allowNumber: true }],
+    '@typescript-eslint/restrict-template-expressions': OFF, // [ERROR, { allowNumber: true }], // doesn't apperar to work as of @typescript-eslint:2.9.0
     '@typescript-eslint/return-await': ERROR,
     '@typescript-eslint/semi': ERROR,
     '@typescript-eslint/space-before-function-paren': [ERROR, { anonymous: 'never', named: 'never', asyncArrow: 'always' }],
