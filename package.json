@@ -34,7 +34,8 @@
   "main": "index.js",
   "scripts": {
     "find-deprecated": "eslint-find-rules --deprecated .eslintrc.json",
-    "find-unused": "eslint-find-rules --unused .eslintrc.json"
+    "find-unused": "eslint-find-rules --unused .eslintrc.json",
+    "lint": "eslint --ext=tsx --ext=ts --ext=mjs --ext=js --ext=jsx ."
   },
   "peerDependencies": {
     "eslint": ">=6",
