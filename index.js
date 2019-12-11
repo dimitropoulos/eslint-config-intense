@@ -112,7 +112,7 @@ module.exports = {
     'array-callback-return': ERROR,
     'block-scoped-var': ERROR,
     'class-methods-use-this': ERROR,
-    'complexity': [ERROR, {'max': 50}],
+    'complexity': [ERROR, { 'max': 50 }],
     'consistent-return': OFF(),
     'curly': ERROR, // if you have a problem with this read https://dwheeler.com/essays/apple-goto-fail.html
     'default-case': ERROR,
@@ -339,7 +339,7 @@ module.exports = {
     'arrow-parens': [ERROR, 'as-needed'],
     'arrow-spacing': [ERROR, { 'before': true, 'after': true }],
     'constructor-super': ERROR,
-    'generator-star-spacing': ERROR,
+    'generator-star-spacing': [ERROR, 'after'],
     'no-class-assign': ERROR,
     'no-confusing-arrow': [ERROR, { 'allowParens': true }],
     'no-const-assign': ERROR,
@@ -579,7 +579,7 @@ module.exports = {
     'react/jsx-curly-newline': OFF(`Reasonable people disagree but I think this can be left up to the developer, although I don't feel strongly.  If there was a "if the first predicate is x number of characters long" option, I would feel differently.`),
     'react/jsx-curly-spacing': ERROR,
     'react/jsx-equals-spacing': ERROR,
-    'react/jsx-filename-extension': [ERROR, { 'extensions': ['.jsx', '.tsx']}],
+    'react/jsx-filename-extension': [ERROR, { 'extensions': ['.jsx', '.tsx'] }],
     'react/jsx-first-prop-new-line': [ERROR, 'multiline'],
     'react/jsx-fragments': [ERROR, 'element'], // I don't find it a bad thing to import `Fragment`.  at least that way it's crystal-clear what the author intended.  In a few years if it's super common to use the shorthand I could be persuaded to switch camps.  also the thing about fragments not being able to have a key or attribute when using the shorthand sways my opinion.
     'react/jsx-handler-names': OFF("Naming is hard.  Often there's a good reason.  If you can't do naming well.. I don't believe a linter can save you."),
