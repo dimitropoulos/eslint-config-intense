@@ -258,7 +258,7 @@ module.exports = {
     'lines-between-class-members': [ERROR, 'always', { 'exceptAfterSingleLine': true }],
     'max-depth': [ERROR, 7],
     'max-len': [WARN, {
-      'code': 150,
+      'code': 120,
       'ignoreStrings': true,
       'ignoreTemplateLiterals': true,
       'ignoreComments': true,
@@ -514,7 +514,7 @@ module.exports = {
     '@typescript-eslint/strict-boolean-expressions': ERROR,
     '@typescript-eslint/triple-slash-reference': ERROR,
     '@typescript-eslint/type-annotation-spacing': ERROR,
-    '@typescript-eslint/typedef': ERROR,
+    '@typescript-eslint/typedef': OFF('type inferencing is your friend... use it.'),
     '@typescript-eslint/unbound-method': ERROR,
     '@typescript-eslint/unified-signatures': ERROR,
 
