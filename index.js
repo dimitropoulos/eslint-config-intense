@@ -430,17 +430,6 @@ module.exports = {
           fixWith: 'any[]',
           message: 'use something like `any[]` instead',
         },
-        Function: {
-          message: 'use a more specific type, such as `() => void`, `() => any`, `(any: any) => void`, etc.',
-        },
-        Object: {
-          fixWith: '{}',
-          message: "usage of Object is too wide.  If you really don't know then use `any` or `unknown` instead.",
-        },
-        String: {
-          fixWith: 'string',
-          message: 'use `string` instead',
-        },
       },
     }],
     '@typescript-eslint/brace-style': [ERROR, '1tbs'],
@@ -582,9 +571,9 @@ module.exports = {
     'react/require-optimization': OFF("This rule makes sense if you weren't depending on redux and things like reselect and re-reselect like I often do."),
     'react/require-render-return': ERROR,
     'react/self-closing-comp': ERROR,
-    'react/sort-comp': ERROR, // hate me if you wish.
+    'react/sort-comp': OFF('Now that hooks are a thing this is far less useful than it used to be'),
     'react/sort-prop-types': ERROR, // TypeScript handles this
-    'react/state-in-constructor': ERROR,
+    'react/state-in-constructor': [ERROR, 'never'],
     'react/static-property-placement': ERROR,
     'react/style-prop-object': ERROR,
     'react/void-dom-elements-no-children': ERROR,
@@ -620,7 +609,7 @@ module.exports = {
     'react/jsx-props-no-multi-spaces': ERROR,
     'react/jsx-props-no-spreading': ERROR, // I firmly believe that (except in rare cases) this behavior is the source of many bugs (that I have seen) and should require an explanation (i.e. when this rule is disabled) every time.
     'react/jsx-sort-default-props': ERROR,
-    'react/jsx-sort-props': ERROR, // hate me if you wish.  the goal of this project is for the code to be as consistent as possible.
+    'react/jsx-sort-props': ERROR, // hate me if you wish.  the goal of this project is for the code to be as consistent as possible.  also this is now auto-fixable which is cool.
     'react/jsx-tag-spacing': ERROR,
     'react/jsx-uses-react': ERROR,
     'react/jsx-uses-vars': ERROR,
@@ -636,7 +625,7 @@ module.exports = {
     // rules URL: https://github.com/benmosher/eslint-plugin-import#rules
     'import/no-unresolved': BUGGY('unknown', "can't seem to get it to work"), // [ERROR, { 'amd': true, 'commonjs': true }],
     'import/default': ERROR,
-    'import/named': ERROR,
+    'import/named': BUGGY('eslint-plugin-import:v2.21.1', "doesn't work with TypeScript types, may need to add https://github.com/rx-ts/eslint-import-resolver-ts"),
     'import/namespace': ERROR,
     'import/no-absolute-path': ERROR,
     'import/no-cycle': ERROR,
@@ -661,7 +650,7 @@ module.exports = {
     'import/no-amd': ERROR,
     'import/no-commonjs': ERROR,
     'import/no-nodejs-modules': OFF(),
-    'import/unambiguous': ERROR,
+    'import/unambiguous': BUGGY('eslint-plugin-import:v2.21.1', "seems that this doesn't work with TypeScript (`d.ts`) definition files or ts files that only export TypeScript types."),
 
     // Stylistic
     'import/dynamic-import-chunkname': ERROR,
@@ -677,7 +666,7 @@ module.exports = {
     'import/no-named-default': ERROR,
     'import/no-named-export': OFF(),
     'import/no-namespace': OFF("typescript uses namespace imports - I'm not otherwise sure what the motivation for turning this off would be"),
-    'import/no-unassigned-import': ERROR,
+    'import/no-unassigned-import': OFF('there just seem to be too may places where this has to be done'),
     'import/order': SUCCESSOR('simple-import-sort/sort'),
     'import/prefer-default-export': OFF('named exports are better (for one reason, because TypeScript can automatically import a named resource)'),
 
