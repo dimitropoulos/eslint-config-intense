@@ -420,6 +420,7 @@ module.exports = {
     '@typescript-eslint/adjacent-overload-signatures': ERROR,
     '@typescript-eslint/array-type': ERROR,
     '@typescript-eslint/await-thenable': ERROR,
+    '@typescript-eslint/ban-tslint-comment': ERROR,
     '@typescript-eslint/ban-ts-comment': [ERROR, {
       'ts-ignore': 'allow-with-description',
       'ts-expect-error': 'allow-with-description',
@@ -453,6 +454,7 @@ module.exports = {
     '@typescript-eslint/naming-convention': OFF('This is perhaps the most complicated lint rule I am aware of.  Sill, too many standards that matter (e.g. react components absolutely must start with a capital letter) exist that foil this plan'),
     '@typescript-eslint/no-array-constructor': ERROR,
     '@typescript-eslint/no-base-to-string': ERROR,
+    '@typescript-eslint/no-confusing-non-null-assertion': ERROR,
     '@typescript-eslint/no-dupe-class-members': ERROR,
     '@typescript-eslint/no-dynamic-delete': ERROR,
     '@typescript-eslint/no-empty-function': OFF("the usefullness of noop functions in functional programming aside, I think the UX of having every function at some point (while you're writing it) trigger this error is more harm than the rule is worth"),
@@ -489,7 +491,7 @@ module.exports = {
     '@typescript-eslint/no-unsafe-member-access': ERROR,
     '@typescript-eslint/no-unsafe-return': ERROR,
     '@typescript-eslint/no-unused-expressions': ERROR,
-    '@typescript-eslint/no-unused-vars': ERROR,
+    '@typescript-eslint/no-unused-vars': [ERROR, { ignoreRestSiblings: true }],
     '@typescript-eslint/no-unused-vars-experimental': [ERROR, { ignoreArgsIfArgsAfterAreUsed: true }], // This is great because it allows to turn TypeScript's checker off for noUnusedLocals and noUnusedParameters thereby not making the build fail.
     '@typescript-eslint/no-use-before-define': ERROR,
     '@typescript-eslint/no-useless-constructor': ERROR,
