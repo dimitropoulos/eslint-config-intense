@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-intense",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "description": "Eslint rules for the overly serious",
   "repository": "dimitropoulos/eslint-config-intense",
   "license": "MIT",
@@ -33,40 +33,34 @@
   },
   "main": "index.js",
   "scripts": {
-    "find-deprecated": "eslint-find-rules --deprecated ./.eslintrc.json",
-    "find-unused": "eslint-find-rules --unused ./.eslintrc.json",
+    "generate": "node generate-json.js",
+    "prefind-deprecated": "yarn generate",
+    "find-deprecated": "eslint-find-rules --deprecated ./generated.json",
+    "prefind-unused": "yarn generate",
+    "find-unused": "eslint-find-rules --unused ./generated.json",
+    "predeploy": "yarn generate",
+    "deploy": "yarn publish",
     "lint": "eslint --ext=tsx --ext=ts --ext=mjs --ext=js --ext=jsx ."
   },
   "peerDependencies": {
-    "@typescript-eslint/eslint-plugin": "^3.2.0",
-    "@typescript-eslint/parser": "^3.2.0",
-    "eslint": "^7.2.0",
-    "eslint-plugin-eslint-comments": "^3.2.0",
-    "eslint-plugin-import": "^2.21.1",
-    "eslint-plugin-jest": "^23.13.2",
-    "eslint-plugin-jest-formatting": "^1.2.0",
-    "eslint-plugin-no-secrets": "^0.6.8",
-    "eslint-plugin-ramda": "^2.5.1",
-    "eslint-plugin-react": "^7.20.0",
-    "eslint-plugin-react-hooks": "^4.0.4",
-    "eslint-plugin-simple-import-sort": "^5.0.3",
-    "typescript": "^3.9.5"
+    "eslint": "^7.4.0",
+    "typescript": "^3.9.6"
   },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "3.2.0",
-    "@typescript-eslint/parser": "3.2.0",
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "3.6.1",
+    "@typescript-eslint/parser": "3.6.1",
     "confusing-browser-globals": "1.0.9",
-    "eslint": "7.2.0",
+    "eslint": "7.4.0",
     "eslint-find-rules": "3.5.0",
     "eslint-plugin-eslint-comments": "3.2.0",
-    "eslint-plugin-import": "2.21.1",
-    "eslint-plugin-jest": "23.13.2",
-    "eslint-plugin-jest-formatting": "1.2.0",
+    "eslint-plugin-import": "2.22.0",
+    "eslint-plugin-jest": "23.18.0",
+    "eslint-plugin-jest-formatting": "2.0.0",
     "eslint-plugin-no-secrets": "0.6.8",
     "eslint-plugin-ramda": "2.5.1",
-    "eslint-plugin-react": "7.20.0",
-    "eslint-plugin-react-hooks": "4.0.4",
+    "eslint-plugin-react": "7.20.3",
+    "eslint-plugin-react-hooks": "4.0.8",
     "eslint-plugin-simple-import-sort": "5.0.3",
-    "typescript": "3.9.5"
+    "typescript": "3.9.6"
   }
 }
