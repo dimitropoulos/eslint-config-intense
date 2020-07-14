@@ -35,6 +35,9 @@ const PROJECT_BY_PROJECT = 'This is a project-by-project rule that should be con
 /** Used to signify that the rule in question is borderline-useless. */
 const NOT_VALUABLE = "I don't see enough value to justify including this rule.";
 
+/** This rule is turned off in an override for *.js files only because it requires typescript */
+const JAVASCRIPT = 'off';
+
 const restrictedGlobals = require('confusing-browser-globals');
 
 module.exports = {
@@ -65,6 +68,25 @@ module.exports = {
     'jest-formatting',
     'simple-import-sort',
   ],
+  overrides: [
+    {
+      files: ['*.js'],
+      rules: {
+        '@typescript-eslint/no-require-imports': OFF(JAVASCRIPT),
+        '@typescript-eslint/no-var-requires': OFF(JAVASCRIPT),
+        'global-require': OFF(JAVASCRIPT),
+        'import/no-commonjs': OFF(JAVASCRIPT),
+        'no-console': OFF(JAVASCRIPT),
+        '@typescript-eslint/no-unsafe-assignment': OFF(JAVASCRIPT),
+        '@typescript-eslint/no-unsafe-member-access': OFF(JAVASCRIPT),
+        '@typescript-eslint/no-unsafe-call': OFF(JAVASCRIPT),
+        '@typescript-eslint/no-unsafe-return': OFF(JAVASCRIPT),
+        '@typescript-eslint/strict-boolean-expressions': OFF(JAVASCRIPT),
+        'import/named': OFF(JAVASCRIPT),
+        'import/unambiguous': OFF(JAVASCRIPT),
+      },
+    },
+  ],
   'rules': {
     // plugin:eslint ******************************************************************
     // rules URL: https://github.com/eslint/eslint/tree/master/docs/rules
@@ -82,7 +104,7 @@ module.exports = {
     'no-dupe-args': ERROR,
     'no-dupe-keys': ERROR,
     'no-duplicate-case': ERROR,
-    'no-empty': ERROR,
+    'no-empty': [ERROR, { allowEmptyCatch: true }],
     'no-empty-character-class': ERROR,
     'no-ex-assign': ERROR,
     'no-extra-boolean-cast': ERROR,
@@ -93,8 +115,10 @@ module.exports = {
     'no-inner-declarations': BUGGY('unknown', "doesn't play nice with namespaces https://github.com/typescript-eslint/typescript-eslint/issues/239"),
     'no-invalid-regexp': ERROR,
     'no-irregular-whitespace': ERROR,
+    'no-loss-of-precision': SUCCESSOR('@typescript-eslint/no-loss-of-precision'),
     'no-misleading-character-class': ERROR,
     'no-obj-calls': ERROR,
+    'no-promise-executor-return': ERROR,
     'no-prototype-builtins': ERROR,
     'no-regex-spaces': ERROR,
     'no-setter-return': ERROR,
@@ -102,8 +126,10 @@ module.exports = {
     'no-template-curly-in-string': ERROR,
     'no-unexpected-multiline': ERROR,
     'no-unreachable': ERROR,
+    'no-unreachable-loop': ERROR,
     'no-unsafe-finally': ERROR,
     'no-unsafe-negation': ERROR,
+    'no-useless-backreference': ERROR,
     'require-atomic-updates': ERROR,
     'use-isnan': ERROR,
     'valid-typeof': ERROR,
@@ -117,6 +143,7 @@ module.exports = {
     'consistent-return': OFF(),
     'curly': ERROR, // if you have a problem with this read https://dwheeler.com/essays/apple-goto-fail.html
     'default-case': ERROR,
+    'default-case-last': ERROR,
     'default-param-last': SUCCESSOR('@typescript-eslint/default-param-last'),
     'dot-location': [ERROR, 'property'],
     'dot-notation': SUCCESSOR('@typescript-eslint/dot-notation'),
@@ -237,7 +264,7 @@ module.exports = {
     'func-style': [ERROR, 'declaration', { 'allowArrowFunctions': true }],
     'function-call-argument-newline': OFF('[handled by prettier] not really significant anyway'),
     'function-paren-newline': OFF(),
-    'id-blacklist': OFF(),
+    'id-denylist': OFF(),
     'id-length': [ERROR, {
       'min': 2,
       'exceptions': [
@@ -319,7 +346,7 @@ module.exports = {
     'semi': SUCCESSOR('@typescript-eslint/semi'),
     'semi-spacing': ERROR,
     'semi-style': ERROR,
-    'sort-keys': ERROR, // call me crazy, go ahead.  The reason I think this rule is helpful is because often junior programmers will rely on the order of object properties despite that an object is an unordered collection according to the javascript spec.  This also therefore prevents a footgun where some browsers (e.g. chrome) respect insertion order, but others (e.g. safari) do not.
+    'sort-keys': ERROR, // call me crazy, go ahead.  The reason I think this rule is helpful is because often junior programmers will rely on the order of object properties despite that an object is an unordered collection according to the javascript spec.  This also therefore prevents a footgun where some browsers (e.g. chrome) respect insertion order, but others (e.g. safari) do not.  I fully understand that this lint rule doesn't make such an error impossible, but it makes it difficult to do in the trivial case or at least will call a reviewer's attention by being specifically eslint-ignore'd.
     'sort-vars': ERROR, // multiple declaration is turned off anyway.
     'space-before-blocks': ERROR,
     'space-before-function-paren': SUCCESSOR('@typescript-eslint/space-before-function-paren'),
@@ -349,6 +376,7 @@ module.exports = {
     'no-dupe-else-if': ERROR,
     'no-duplicate-imports': ERROR,
     'no-new-symbol': ERROR,
+    'no-restricted-exports': OFF(PROJECT_BY_PROJECT),
     'no-restricted-imports': OFF(PROJECT_BY_PROJECT),
     'no-this-before-super': ERROR,
     'no-useless-computed-key': ERROR,
@@ -409,7 +437,7 @@ module.exports = {
     'eslint-comments/no-unused-enable': ERROR,
     'eslint-comments/no-restricted-disable': OFF(PROJECT_BY_PROJECT),
     'eslint-comments/no-use': OFF("exceptions exist.  it's javascript, after all."),
-    // UNRELEASED 'eslint-comments/require-description': ERROR,
+    'eslint-comments/require-description': ERROR,
 
     // plugin:no-secrets *******************************************************
     // rules URL: https://github.com/nickdeis/eslint-plugin-no-secrets
@@ -488,6 +516,7 @@ module.exports = {
     '@typescript-eslint/no-unnecessary-type-assertion': ERROR,
     '@typescript-eslint/no-unsafe-assignment': ERROR,
     '@typescript-eslint/no-unsafe-call': ERROR,
+    '@typescript-eslint/no-loss-of-precision': ERROR,
     '@typescript-eslint/no-unsafe-member-access': ERROR,
     '@typescript-eslint/no-unsafe-return': ERROR,
     '@typescript-eslint/no-unused-expressions': ERROR,
@@ -500,6 +529,7 @@ module.exports = {
     '@typescript-eslint/prefer-for-of': ERROR,
     '@typescript-eslint/prefer-function-type': OFF('Certain abstractions read clearer when documented by interfaces, even those with only one call signature.'),
     '@typescript-eslint/prefer-includes': ERROR,
+    '@typescript-eslint/prefer-literal-enum-member': ERROR,
     '@typescript-eslint/prefer-namespace-keyword': OFF(),
     '@typescript-eslint/prefer-nullish-coalescing': ERROR,
     '@typescript-eslint/prefer-optional-chain': ERROR,
@@ -511,7 +541,7 @@ module.exports = {
     '@typescript-eslint/prefer-ts-expect-error': ERROR,
     '@typescript-eslint/promise-function-async': OFF('situations were Promise.all is involved make this one tricky to follow in practice whilst keeping the right semantics of using regular promise calls.'),
     '@typescript-eslint/quotes': [ERROR, 'single', { 'avoidEscape': true }],
-    '@typescript-eslint/require-array-sort-compare': ERROR,
+    '@typescript-eslint/require-array-sort-compare': [ERROR, { ignoreStringArrays: true }],
     '@typescript-eslint/require-await': OFF('The primary problem here is that often you need a function to satisfy a certain interface that may require async behavior.  Some implementations may simply just not require async behavior (i.e. awaiting) while others absolutely do.'),
     '@typescript-eslint/restrict-plus-operands': ERROR,
     '@typescript-eslint/restrict-template-expressions': BUGGY('@typescript-eslint:v2.9.0', 'seems to have a lot of false positives with the null coalescing operator'), // ERROR,
@@ -683,6 +713,7 @@ module.exports = {
     'jest/lowercase-name': ERROR,
     'jest/no-alias-methods': ERROR,
     'jest/no-commented-out-tests': ERROR,
+    'jest/no-conditional-expect': ERROR,
     'jest/no-deprecated-functions': ERROR,
     'jest/no-disabled-tests': OFF('I think having the ability to use .skip is legitimate'),
     'jest/no-duplicate-hooks': ERROR,
@@ -702,7 +733,6 @@ module.exports = {
     'jest/no-test-prefixes': ERROR,
     'jest/no-test-return-statement': ERROR,
     'jest/no-truthy-falsy': ERROR,
-    'jest/no-try-expect': ERROR,
     'jest/prefer-called-with': ERROR,
     'jest/prefer-expect-assertions': OFF(NOT_VALUABLE),
     'jest/prefer-hooks-on-top': ERROR,
