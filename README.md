@@ -1,5 +1,7 @@
 # eslint-config-intense
 
+> "Home of the `1_000` line lint config"
+
 This pakage provides an extremely strict and meticulous eslint config that is aimed at TypeScript, React, Jest, and Ramda.
 
 The goal of this project is to use eslint tooling to create as much safety as possible.
@@ -29,3 +31,7 @@ The goal of this project is to use eslint tooling to create as much safety as po
     };
 
     ```
+
+### Alternative Usage
+
+If you want to test the config (or parts of it) without having to import it directly, you can view a generated JSON version of the config at [`generated.json`]('./generated.json').

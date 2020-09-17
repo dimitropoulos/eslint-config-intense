@@ -16,6 +16,7 @@
   },
   "plugins": [
     "@typescript-eslint",
+    "node",
     "no-secrets",
     "eslint-comments",
     "ramda",
@@ -33,17 +34,20 @@
       ],
       "rules": {
         "@typescript-eslint/no-require-imports": "off",
-        "@typescript-eslint/no-var-requires": "off",
-        "global-require": "off",
-        "import/no-commonjs": "off",
-        "no-console": "off",
         "@typescript-eslint/no-unsafe-assignment": "off",
-        "@typescript-eslint/no-unsafe-member-access": "off",
         "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
         "@typescript-eslint/no-unsafe-return": "off",
+        "@typescript-eslint/no-var-requires": "off",
         "@typescript-eslint/strict-boolean-expressions": "off",
+        "node/no-unsupported-features/es-builtins": "error",
+        "node/no-unsupported-features/es-syntax": "error",
+        "node/no-unsupported-features/node-builtins": "error",
         "import/named": "off",
-        "import/unambiguous": "off"
+        "import/no-commonjs": "off",
+        "import/unambiguous": "off",
+        "no-console": "off",
+        "node/global-require": "off"
       }
     }
   ],
@@ -153,7 +157,7 @@
     "no-iterator": "error",
     "no-labels": "error",
     "no-lone-blocks": "error",
-    "no-loop-func": "error",
+    "no-loop-func": "off",
     "no-magic-numbers": "off",
     "no-multi-spaces": "error",
     "no-multi-str": "error",
@@ -164,7 +168,7 @@
     "no-octal-escape": "error",
     "no-param-reassign": "error",
     "no-proto": "error",
-    "no-redeclare": "error",
+    "no-redeclare": "off",
     "no-restricted-properties": "off",
     "no-return-assign": "error",
     "no-return-await": "error",
@@ -265,20 +269,6 @@
     "no-undefined": "off",
     "no-unused-vars": "off",
     "no-use-before-define": "off",
-    "callback-return": "off",
-    "global-require": "warn",
-    "handle-callback-err": "off",
-    "no-buffer-constructor": "error",
-    "no-mixed-requires": "error",
-    "no-new-require": "error",
-    "no-path-concat": "error",
-    "no-process-env": "off",
-    "no-process-exit": "error",
-    "no-restricted-modules": [
-      "error",
-      "left-pad"
-    ],
-    "no-sync": "off",
     "array-bracket-newline": [
       "error",
       "consistent"
@@ -637,6 +627,7 @@
       "error",
       "interface"
     ],
+    "@typescript-eslint/consistent-type-imports": "off",
     "@typescript-eslint/default-param-last": "error",
     "@typescript-eslint/dot-notation": "error",
     "@typescript-eslint/explicit-function-return-type": "off",
@@ -665,10 +656,13 @@
     "@typescript-eslint/no-extraneous-class": "error",
     "@typescript-eslint/no-floating-promises": "error",
     "@typescript-eslint/no-for-in-array": "error",
+    "@typescript-eslint/no-implicit-any-catch": "error",
     "@typescript-eslint/no-implied-eval": "error",
     "@typescript-eslint/no-inferrable-types": "error",
     "@typescript-eslint/no-invalid-this": "error",
     "@typescript-eslint/no-invalid-void-type": "error",
+    "@typescript-eslint/no-loop-func": "error",
+    "@typescript-eslint/no-loss-of-precision": "error",
     "@typescript-eslint/no-magic-numbers": "off",
     "@typescript-eslint/no-misused-new": "error",
     "@typescript-eslint/no-misused-promises": "error",
@@ -676,7 +670,9 @@
     "@typescript-eslint/no-non-null-asserted-optional-chain": "error",
     "@typescript-eslint/no-non-null-assertion": "error",
     "@typescript-eslint/no-parameter-properties": "error",
+    "@typescript-eslint/no-redeclare": "error",
     "@typescript-eslint/no-require-imports": "error",
+    "@typescript-eslint/no-shadow": "off",
     "@typescript-eslint/no-this-alias": "error",
     "@typescript-eslint/no-throw-literal": "error",
     "@typescript-eslint/no-type-alias": "off",
@@ -687,7 +683,6 @@
     "@typescript-eslint/no-unnecessary-type-assertion": "error",
     "@typescript-eslint/no-unsafe-assignment": "error",
     "@typescript-eslint/no-unsafe-call": "error",
-    "@typescript-eslint/no-loss-of-precision": "error",
     "@typescript-eslint/no-unsafe-member-access": "error",
     "@typescript-eslint/no-unsafe-return": "error",
     "@typescript-eslint/no-unused-expressions": "error",
@@ -697,16 +692,11 @@
         "ignoreRestSiblings": true
       }
     ],
-    "@typescript-eslint/no-unused-vars-experimental": [
-      "error",
-      {
-        "ignoreArgsIfArgsAfterAreUsed": true
-      }
-    ],
     "@typescript-eslint/no-use-before-define": "error",
     "@typescript-eslint/no-useless-constructor": "error",
     "@typescript-eslint/no-var-requires": "error",
     "@typescript-eslint/prefer-as-const": "error",
+    "@typescript-eslint/prefer-enum-initializers": "error",
     "@typescript-eslint/prefer-for-of": "error",
     "@typescript-eslint/prefer-function-type": "off",
     "@typescript-eslint/prefer-includes": "error",
@@ -868,6 +858,7 @@
     "react/jsx-no-bind": [
       "error",
       {
+        "allowArrowFunctions": true,
         "ignoreRefs": true
       }
     ],
@@ -944,27 +935,34 @@
     "jest/no-conditional-expect": "error",
     "jest/no-deprecated-functions": "error",
     "jest/no-disabled-tests": "off",
+    "jest/no-done-callback": "error",
     "jest/no-duplicate-hooks": "error",
-    "jest/no-expect-resolves": "error",
     "jest/no-export": "error",
     "jest/no-focused-tests": "error",
     "jest/no-hooks": "error",
     "jest/no-identical-title": "error",
     "jest/no-if": "error",
+    "jest/no-interpolation-in-snapshots": "error",
     "jest/no-jasmine-globals": "error",
     "jest/no-jest-import": "error",
     "jest/no-large-snapshots": "error",
     "jest/no-mocks-import": "error",
-    "jest/no-restricted-matchers": "off",
+    "jest/no-restricted-matchers": [
+      "error",
+      {
+        "resolves": "use `expect(await promise)` instead. Jest allows you to test a promise resolve value using `await expect().resolves`. For consistency and readability this rule bans `expect().resolves` in favor of `expect(await promise)`.",
+        "toBeFalsy": "Avoid `toBeFalsy`",
+        "toBeTruthy": "Avoid `toBeTruthy`",
+        "toMatchSnapshot": "Use `toMatchInlineSnapshot()` instead in order to make snapshot tests more manageable and reviewable by writing the snapshots inline in the test file.",
+        "toThrowErrorMatchingSnapshot": "Use `toThrowErrorMatchingInlineSnapshot()` instead in order to make snapshot tests more manageable and reviewableby writing the snapshots inline in the test file."
+      }
+    ],
     "jest/no-standalone-expect": "error",
-    "jest/no-test-callback": "error",
     "jest/no-test-prefixes": "error",
     "jest/no-test-return-statement": "error",
-    "jest/no-truthy-falsy": "error",
     "jest/prefer-called-with": "error",
     "jest/prefer-expect-assertions": "off",
     "jest/prefer-hooks-on-top": "error",
-    "jest/prefer-inline-snapshots": "error",
     "jest/prefer-spy-on": "error",
     "jest/prefer-strict-equal": "error",
     "jest/prefer-to-be-null": "error",
@@ -985,7 +983,54 @@
     "jest-formatting/padding-around-describe-blocks": "error",
     "jest-formatting/padding-around-expect-groups": "error",
     "jest-formatting/padding-around-test-blocks": "error",
-    "jest-formatting/padding-around-all": "off"
+    "jest-formatting/padding-around-all": "off",
+    "node/handle-callback-err": "off",
+    "node/no-callback-literal": "error",
+    "node/no-exports-assign": "error",
+    "node/no-extraneous-import": "error",
+    "node/no-extraneous-require": "error",
+    "node/no-missing-import": "off",
+    "node/no-missing-require": "off",
+    "node/no-new-require": "error",
+    "node/no-path-concat": "error",
+    "node/no-process-exit": "error",
+    "node/no-unpublished-bin": "error",
+    "node/no-unpublished-import": "off",
+    "node/no-unpublished-require": "error",
+    "node/no-unsupported-features/es-builtins": "off",
+    "node/no-unsupported-features/es-syntax": "off",
+    "node/no-unsupported-features/node-builtins": "off",
+    "node/process-exit-as-throw": "error",
+    "node/shebang": "error",
+    "node/no-deprecated-api": "error",
+    "node/callback-return": "off",
+    "node/exports-style": "error",
+    "node/file-extension-in-import": "off",
+    "node/global-require": "warn",
+    "node/no-mixed-requires": "error",
+    "node/no-process-env": "off",
+    "node/no-restricted-import": [
+      "error",
+      [
+        "left-pad"
+      ]
+    ],
+    "node/no-restricted-require": [
+      "error",
+      [
+        "left-pad"
+      ]
+    ],
+    "node/no-sync": "off",
+    "node/prefer-global/buffer": "error",
+    "node/prefer-global/console": "error",
+    "node/prefer-global/process": "error",
+    "node/prefer-global/text-decoder": "error",
+    "node/prefer-global/text-encoder": "error",
+    "node/prefer-global/url": "error",
+    "node/prefer-global/url-search-params": "error",
+    "node/prefer-promises/dns": "error",
+    "node/prefer-promises/fs": "error"
   },
   "settings": {
     "react": {
