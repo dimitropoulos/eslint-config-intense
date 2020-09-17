@@ -1,3 +1,7 @@
+<p align="center">
+  <img alt="Lerna" src="./eslint in tents.jpg" width="480">
+</p>
+
 # eslint-config-intense
 
 > "Home of the `1_000` line lint config"
