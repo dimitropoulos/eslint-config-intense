@@ -46,6 +46,8 @@ const JAVASCRIPT = 'off';
 
 const TYPESCRIPT = 'off';
 
+const USER_DISCRETION = 'off';
+
 const restrictedGlobals = require('confusing-browser-globals');
 
 module.exports = {
@@ -200,7 +202,7 @@ module.exports = {
     'no-param-reassign': ERROR,
     'no-proto': ERROR,
     'no-redeclare': TYPESCRIPT_EXTENDED,
-    'no-restricted-properties': OFF(),
+    'no-restricted-properties': OFF(PROJECT_BY_PROJECT),
     'no-return-assign': ERROR,
     'no-return-await': SUCCESSOR('@typescript-eslint/return-await'),
     'no-script-url': ERROR,
@@ -219,12 +221,12 @@ module.exports = {
     'no-void': ERROR,
     'no-warning-comments': OFF(),
     'no-with': ERROR,
-    'prefer-named-capture-group': OFF(),
+    'prefer-named-capture-group': OFF(PROJECT_BY_PROJECT),
     'prefer-promise-reject-errors': ERROR,
     'prefer-regex-literals': ERROR,
     'radix': ERROR,
-    'require-await': SUCCESSOR('typescript-eslint/require-await'),
-    'require-unicode-regexp': OFF(),
+    'require-await': SUCCESSOR('@typescript-eslint/require-await'),
+    'require-unicode-regexp': OFF(PROJECT_BY_PROJECT),
     'vars-on-top': ERROR,
     'wrap-iife': ERROR,
     'yoda': OFF('not needed because `no-cond-assign` covers this error'),
@@ -264,8 +266,8 @@ module.exports = {
     'func-names': UNKNOWN, // still thinking about the implications of this one
     'func-style': [ERROR, 'declaration', { 'allowArrowFunctions': true }],
     'function-call-argument-newline': OFF('[handled by prettier] not really significant anyway'),
-    'function-paren-newline': OFF(),
-    'id-denylist': OFF(),
+    'function-paren-newline': OFF(USER_DISCRETION),
+    'id-denylist': OFF(PROJECT_BY_PROJECT),
     'id-length': [ERROR, {
       'min': 2,
       'exceptions': [
@@ -276,13 +278,13 @@ module.exports = {
       ],
       'properties': 'never', // sometimes there are properties in existing data (i.e. 3rd party data) you are trying to map to that you simply can't control.
     }],
-    'id-match': OFF(),
+    'id-match': OFF(USER_DISCRETION),
     'implicit-arrow-linebreak': [ERROR, 'beside'],
     'indent': TYPESCRIPT_EXTENDED,
     'jsx-quotes': ERROR,
     'key-spacing': [ERROR, { 'mode': 'minimum' }],
     'keyword-spacing': TYPESCRIPT_EXTENDED,
-    'line-comment-position': OFF(),
+    'line-comment-position': OFF(USER_DISCRETION),
     'linebreak-style': [ERROR, 'unix'],
     'lines-around-comment': BUGGY('UNKNOWN', "unfortunately, this doesn't play nice with allowing comments at the start of TypeScript types and interfaces: https://github.com/typescript-eslint/typescript-eslint/issues/1933"),
     'lines-between-class-members': TYPESCRIPT_EXTENDED,
@@ -312,7 +314,7 @@ module.exports = {
     'newline-per-chained-call': ERROR,
     'no-array-constructor': TYPESCRIPT_EXTENDED,
     'no-bitwise': ERROR,
-    'no-continue': OFF(),
+    'no-continue': OFF("Shouldn't be using labels. This encourages labels."),
     'no-inline-comments': OFF('inline comments === good.'),
     'no-lonely-if': ERROR,
     'no-mixed-operators': ERROR,
@@ -339,7 +341,7 @@ module.exports = {
     'operator-assignment': ERROR, // clarity comes at the cost of disallowing terseness.
     'operator-linebreak': OFF('too many edge cases here, unfortunately'),
     'padded-blocks': OFF("there are situations where this helps and situations where it doesn't"),
-    'padding-line-between-statements': OFF(),
+    'padding-line-between-statements': OFF(NOT_VALUABLE),
     'prefer-exponentiation-operator': ERROR,
     'prefer-object-spread': ERROR,
     'quote-props': [ERROR, 'as-needed', { 'numbers': true }], // I have at times used the `'numbers': false` option, but I have learned that some people are not aware that object keys can only ever be strings in javascript (well, or symbols, but anyway). Despite
@@ -356,7 +358,7 @@ module.exports = {
     'space-unary-ops': ERROR,
     'spaced-comment': [ERROR, 'always', {
       'exceptions': ['/', '*', '-', '* '], // for ASCII art :)
-      'markers': ['///'], // for typescript directives, doxygen, vsdoc, etc. (which use `///`)
+      'markers': ['/'], // for TypeScript directives, doxygen, vsdoc, etc. (which use `///`)
     }],
     'switch-colon-spacing': ERROR,
     'template-tag-spacing': ERROR,
@@ -506,6 +508,7 @@ module.exports = {
     '@typescript-eslint/no-unsafe-call': ERROR,
     '@typescript-eslint/no-unsafe-member-access': ERROR,
     '@typescript-eslint/no-unsafe-return': ERROR,
+    '@typescript-eslint/non-nullable-type-assertion-style': OFF("using non-null assertions cancels the benefits of the strict null-checking mode.."),
     '@typescript-eslint/no-var-requires': ERROR,
     '@typescript-eslint/prefer-as-const': ERROR,
     '@typescript-eslint/prefer-enum-initializers': ERROR,
