@@ -333,8 +333,8 @@ module.exports = {
     'no-unneeded-ternary': ERROR,
     'no-whitespace-before-property': ERROR,
     'nonblock-statement-body-position': OFF('not needed because the `curly` rule handles this case'),
-    'object-curly-newline': TYPESCRIPT_EXTENDED, // ???
-    'object-curly-spacing': TYPESCRIPT_EXTENDED, // ???
+    'object-curly-newline': [ERROR, { minProperties: 3 }],
+    'object-curly-spacing': TYPESCRIPT_EXTENDED,
     'object-property-newline': OFF('this is very subject to the length of the identifiers and values'),
     'one-var': [ERROR, 'never'],
     'one-var-declaration-per-line': OFF("the `one-var` setting of 'never' ensures multi-line declarations are not allowed"),
@@ -358,7 +358,10 @@ module.exports = {
     'space-unary-ops': ERROR,
     'spaced-comment': [ERROR, 'always', {
       'exceptions': ['/', '*', '-', '* '], // for ASCII art :)
-      'markers': ['/'], // for TypeScript directives, doxygen, vsdoc, etc. (which use `///`)
+      'markers': [
+        '/', // for TypeScript directives, doxygen, vsdoc, etc. (which use `///`)
+        '?', // for Quokka
+      ],
     }],
     'switch-colon-spacing': ERROR,
     'template-tag-spacing': ERROR,
@@ -465,7 +468,7 @@ module.exports = {
       },
     }],
     '@typescript-eslint/class-literal-property-style': ERROR,
-    '@typescript-eslint/consistent-indexed-object-style': [ERROR, 'record'],
+    '@typescript-eslint/consistent-indexed-object-style': [ERROR, 'index-signature'], // index-signature is better because it allows you to provide a variable name for the key which serves as a sort of documentation of the author's intent
     '@typescript-eslint/consistent-type-assertions': ERROR,
     '@typescript-eslint/consistent-type-definitions': [ERROR, 'interface'],
     '@typescript-eslint/consistent-type-imports': OFF(NOT_VALUABLE),
@@ -529,6 +532,7 @@ module.exports = {
     '@typescript-eslint/require-array-sort-compare': [ERROR, { ignoreStringArrays: true }],
     '@typescript-eslint/restrict-plus-operands': ERROR,
     '@typescript-eslint/restrict-template-expressions': BUGGY('@typescript-eslint:v2.9.0', 'seems to have a lot of false positives with the null coalescing operator'), // ERROR,
+    '@typescript-eslint/sort-type-union-intersection-members': ERROR,
     '@typescript-eslint/strict-boolean-expressions': ERROR,
     '@typescript-eslint/switch-exhaustiveness-check': ERROR,
     '@typescript-eslint/triple-slash-reference': ERROR,
@@ -566,6 +570,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': [ERROR, { ignoreRestSiblings: true }],
     '@typescript-eslint/no-use-before-define': ERROR,
     '@typescript-eslint/no-useless-constructor': ERROR,
+    '@typescript-eslint/object-curly-spacing': [WARN, 'always', { 'arraysInObjects': true }],
     '@typescript-eslint/quotes': [ERROR, 'single', { 'avoidEscape': true }],
     '@typescript-eslint/require-await': ERROR,
     '@typescript-eslint/return-await': ERROR,
@@ -645,8 +650,10 @@ module.exports = {
     'react/jsx-key': ERROR,
     'react/jsx-max-depth': [WARN, { 'max': 25 }], // this is almost useless, but not completely so I set it to a somewhat absurd maximum.  Using things like styled-components and styletron increases the jsx depth quite a bit (necessarily) in complex layouts.
     'react/jsx-max-props-per-line': OFF('The `max-len` rule takes care of this.'),
+    'react/jsx-newline': OFF('there are often arbitrary (yet, rational) reasons for having spacing in some place or another between components'),
     'react/jsx-no-bind': [ERROR, { allowArrowFunctions: true, ignoreRefs: true }],
     'react/jsx-no-comment-textnodes': ERROR,
+    'react/jsx-no-constructed-context-values': ERROR, // sure.. I guess..
     'react/jsx-no-duplicate-props': ERROR,
     'react/jsx-no-literals': OFF("yeah... this rule shouldn't exist - we should just fix the syntax highlighters."),
     'react/jsx-no-script-url': ERROR,

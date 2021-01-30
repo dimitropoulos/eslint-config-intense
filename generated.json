@@ -428,7 +428,12 @@
     "no-unneeded-ternary": "error",
     "no-whitespace-before-property": "error",
     "nonblock-statement-body-position": "off",
-    "object-curly-newline": "off",
+    "object-curly-newline": [
+      "error",
+      {
+        "minProperties": 3
+      }
+    ],
     "object-curly-spacing": "off",
     "object-property-newline": "off",
     "one-var": [
@@ -471,7 +476,8 @@
           "* "
         ],
         "markers": [
-          "/"
+          "/",
+          "?"
         ]
       }
     ],
@@ -606,7 +612,7 @@
     "@typescript-eslint/class-literal-property-style": "error",
     "@typescript-eslint/consistent-indexed-object-style": [
       "error",
-      "record"
+      "index-signature"
     ],
     "@typescript-eslint/consistent-type-assertions": "error",
     "@typescript-eslint/consistent-type-definitions": [
@@ -679,6 +685,7 @@
     ],
     "@typescript-eslint/restrict-plus-operands": "error",
     "@typescript-eslint/restrict-template-expressions": "off",
+    "@typescript-eslint/sort-type-union-intersection-members": "error",
     "@typescript-eslint/strict-boolean-expressions": "error",
     "@typescript-eslint/switch-exhaustiveness-check": "error",
     "@typescript-eslint/triple-slash-reference": "error",
@@ -737,6 +744,13 @@
     ],
     "@typescript-eslint/no-use-before-define": "error",
     "@typescript-eslint/no-useless-constructor": "error",
+    "@typescript-eslint/object-curly-spacing": [
+      "warn",
+      "always",
+      {
+        "arraysInObjects": true
+      }
+    ],
     "@typescript-eslint/quotes": [
       "error",
       "single",
@@ -867,6 +881,7 @@
       }
     ],
     "react/jsx-max-props-per-line": "off",
+    "react/jsx-newline": "off",
     "react/jsx-no-bind": [
       "error",
       {
@@ -875,6 +890,7 @@
       }
     ],
     "react/jsx-no-comment-textnodes": "error",
+    "react/jsx-no-constructed-context-values": "error",
     "react/jsx-no-duplicate-props": "error",
     "react/jsx-no-literals": "off",
     "react/jsx-no-script-url": "error",
