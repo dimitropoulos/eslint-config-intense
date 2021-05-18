@@ -50,6 +50,7 @@ const USER_DISCRETION = 'off';
 
 const restrictedGlobals = require('confusing-browser-globals');
 
+/** @type { import('eslint').Linter.Config } */
 module.exports = {
   'env': {
     'browser': true,
@@ -679,9 +680,8 @@ module.exports = {
     'react-hooks/exhaustive-deps': ERROR, // Checks effect dependencies
 
     // plugin:import ***********************************************************
-    // Static analysis
     // rules URL: https://github.com/benmosher/eslint-plugin-import#rules
-    'import/no-unresolved': BUGGY('unknown', "can't seem to get it to work"), // [ERROR, { 'amd': true, 'commonjs': true }],
+    // Static analysis
     'import/default': ERROR,
     'import/named': BUGGY('eslint-plugin-import:v2.21.1', "doesn't work with TypeScript types, may need to add https://github.com/rx-ts/eslint-import-resolver-ts"),
     'import/namespace': ERROR,
@@ -689,9 +689,11 @@ module.exports = {
     'import/no-cycle': ERROR,
     'import/no-dynamic-require': ERROR,
     'import/no-internal-modules': OFF(PROJECT_BY_PROJECT),
+    'import/no-relative-packages': ERROR,
     'import/no-relative-parent-imports': OFF(NOT_VALUABLE),
     'import/no-restricted-paths': ERROR,
     'import/no-self-import': ERROR,
+    'import/no-unresolved': BUGGY('unknown', "can't seem to get it to work"), // [ERROR, { 'amd': true, 'commonjs': true }],
     'import/no-unused-modules': ERROR,
     'import/no-useless-path-segments': ERROR,
     'import/no-webpack-loader-syntax': OFF(PROJECT_BY_PROJECT),
@@ -707,6 +709,7 @@ module.exports = {
     // Module systems
     'import/no-amd': ERROR,
     'import/no-commonjs': ERROR,
+    'import/no-import-module-exports': ERROR,
     'import/no-nodejs-modules': OFF(),
     'import/unambiguous': BUGGY('eslint-plugin-import:v2.21.1', "seems that this doesn't work with TypeScript (`d.ts`) definition files or ts files that only export TypeScript types."),
 
