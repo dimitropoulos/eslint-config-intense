@@ -27,6 +27,7 @@ The goal of this project is to use eslint tooling to create as much safety as po
 2. Add a `.eslintrc.js` to the root of your project that looks like this:
 
     ```js
+    /** @type { import('eslint').Linter.Config } */
     module.exports = {
       extends: 'eslint-config-intense',
       rules: {
