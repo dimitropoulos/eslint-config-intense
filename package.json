@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-intense",
-  "version": "0.7.6",
+  "version": "0.7.7",
   "description": "ESLint rules for the overly serious",
   "repository": "dimitropoulos/eslint-config-intense",
   "license": "MIT",
