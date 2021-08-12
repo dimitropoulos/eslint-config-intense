@@ -43,12 +43,12 @@
     "lint": "eslint --ext=tsx --ext=ts --ext=mjs --ext=js --ext=jsx ."
   },
   "peerDependencies": {
-    "@typescript-eslint/eslint-plugin": "~4.28.1",
-    "@typescript-eslint/parser": "~4.28.1",
-    "eslint": "~7.29.0",
+    "@typescript-eslint/eslint-plugin": "~4.29.1",
+    "@typescript-eslint/parser": "~4.29.1",
+    "eslint": "~7.32.0",
     "eslint-plugin-eslint-comments": "~3.2.0",
-    "eslint-plugin-import": "~2.23.4",
-    "eslint-plugin-jest": "~24.3.6",
+    "eslint-plugin-import": "~2.24.0",
+    "eslint-plugin-jest": "~24.4.0",
     "eslint-plugin-jest-formatting": "~3.0.0",
     "eslint-plugin-no-secrets": "~0.8.9",
     "eslint-plugin-node": "~11.1.0",
@@ -61,18 +61,18 @@
   "devDependencies": {
     "@types/confusing-browser-globals": "^1.0.0",
     "@types/eslint": "^7.28.0",
-    "@types/node": "^16.6.0",
-    "eslint-config-helpers": "^1.0.1"
+    "@types/node": "^16.6.1",
+    "eslint-config-helpers": "^1.1.0"
   },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "~4.28.1",
-    "@typescript-eslint/parser": "~4.28.1",
+    "@typescript-eslint/eslint-plugin": "~4.29.1",
+    "@typescript-eslint/parser": "~4.29.1",
     "confusing-browser-globals": "~1.0.10",
-    "eslint": "~7.29.0",
+    "eslint": "~7.32.0",
     "eslint-find-rules": "~3.6.1",
     "eslint-plugin-eslint-comments": "~3.2.0",
-    "eslint-plugin-import": "~2.23.4",
-    "eslint-plugin-jest": "~24.3.6",
+    "eslint-plugin-import": "~2.24.0",
+    "eslint-plugin-jest": "~24.4.0",
     "eslint-plugin-jest-formatting": "~3.0.0",
     "eslint-plugin-no-secrets": "~0.8.9",
     "eslint-plugin-node": "~11.1.0",
