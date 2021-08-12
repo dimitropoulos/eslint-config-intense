@@ -12,7 +12,7 @@
       "es2016",
       "dom.iterable",
       "es2015.iterable",
-      "esnext"
+      "esnext",
     ],
     "module": "es2015",
     "moduleResolution": "node",
@@ -23,7 +23,10 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "esnext"
+    "target": "esnext",
+    "types": [
+      "node",
+    ],
   },
   "include": [
     "**/*.ts",
@@ -32,8 +35,9 @@
     "**/*.mjs",
     "**/*.js",
     "**/*.jsx",
+    "**/*.json",
   ],
   "exclude": [
-    "node_modules"
-  ]
+    "node_modules",
+  ],
 }

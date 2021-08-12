@@ -1,54 +1,21 @@
-'use strict';
-
-/**
- * @param {string} [reason] the rationale for not using the rule.
- */
-const OFF = reason => 'off';
-
-/**
- * Some plugins extend rules of other plugins.
- * For example, the typescript plugin may extend a rule in the base eslint rule set.
- * @param {string} ruleId the rationale for not using the rule.
- */
-const SUCCESSOR = ruleId => 'off';
-
-/**
- * Used for `@typescript-eslint` extension rules for eslint rules of the same name.
- * see: https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#extension-rules
- */
-const TYPESCRIPT_EXTENDED = SUCCESSOR('@typescript-eslint/*')
-
-const WARN = 'warn';
-const ERROR = 'error';
-const DEPRECATED = 'off';
-
-/**
- * used when a rule is only turned off because it was found not to work well.
- * @param {string} asOfVersion the version of the parser or plugin when last investigated
- * @param {string} [reason] the reason why this rule was found to be buggy
- */
-const BUGGY = (asOfVersion, reason) => 'off';
-
-/**
- * This is useful when adding new rules at once.
- * I first write in all the rules and set them to UNKNOWN and then change them to other values as I individually address them.
- */
-const UNKNOWN = 'off';
-
-/** Used to signal that while a rule may have utility, it should really be configured differently depending on the project. */
-const PROJECT_BY_PROJECT = 'This is a project-by-project rule that should be configured differently depending on the project.';
-
-/** Used to signify that the rule in question is borderline-useless. */
-const NOT_VALUABLE = "I don't see enough value to justify including this rule.";
-
-/** This rule is turned off in an override for *.js files only because it requires typescript */
-const JAVASCRIPT = 'off';
-
-const TYPESCRIPT = 'off';
-
-const USER_DISCRETION = 'off';
-
 const restrictedGlobals = require('confusing-browser-globals');
+const {
+  BUGGY,
+  ERROR,
+  JAVASCRIPT_SPECIFIC,
+  NOT_VALUABLE,
+  OFF,
+  PROJECT_BY_PROJECT,
+  SUCCESSOR,
+  TYPESCRIPT_EXTENSION,
+  TYPESCRIPT_SPECIFIC,
+  UNDECIDED,
+  UNKNOWN,
+  USER_DISCRETION,
+  WARN,
+} = require('eslint-config-helpers');
+
+/* eslint-disable sort-keys -- keys are sorted by plugin, then by section */
 
 /** @type { import('eslint').Linter.Config } */
 module.exports = {
@@ -80,26 +47,26 @@ module.exports = {
     'jest-formatting',
     'simple-import-sort',
   ],
-  overrides: [
+  'overrides': [
     {
-      files: ['*.js'],
-      rules: {
-        '@typescript-eslint/no-require-imports': OFF(JAVASCRIPT),
-        '@typescript-eslint/no-unsafe-assignment': OFF(JAVASCRIPT),
-        '@typescript-eslint/no-unsafe-call': OFF(JAVASCRIPT),
-        '@typescript-eslint/no-unsafe-member-access': OFF(JAVASCRIPT),
-        '@typescript-eslint/no-unsafe-return': OFF(JAVASCRIPT),
-        '@typescript-eslint/no-var-requires': OFF(JAVASCRIPT),
-        '@typescript-eslint/strict-boolean-expressions': OFF(JAVASCRIPT),
+      'files': ['*.js'],
+      'rules': {
+        '@typescript-eslint/no-require-imports': OFF(JAVASCRIPT_SPECIFIC),
+        '@typescript-eslint/no-unsafe-assignment': OFF(JAVASCRIPT_SPECIFIC),
+        '@typescript-eslint/no-unsafe-call': OFF(JAVASCRIPT_SPECIFIC),
+        '@typescript-eslint/no-unsafe-member-access': OFF(JAVASCRIPT_SPECIFIC),
+        '@typescript-eslint/no-unsafe-return': OFF(JAVASCRIPT_SPECIFIC),
+        '@typescript-eslint/no-var-requires': OFF(JAVASCRIPT_SPECIFIC),
+        '@typescript-eslint/strict-boolean-expressions': OFF(JAVASCRIPT_SPECIFIC),
+        'import/named': OFF(JAVASCRIPT_SPECIFIC),
+        'import/no-commonjs': OFF(JAVASCRIPT_SPECIFIC),
+        'import/unambiguous': OFF(JAVASCRIPT_SPECIFIC),
+        'no-console': OFF(JAVASCRIPT_SPECIFIC),
+        'node/global-require': OFF(JAVASCRIPT_SPECIFIC),
         'node/no-unsupported-features/es-builtins': ERROR,
         'node/no-unsupported-features/es-syntax': ERROR,
         'node/no-unsupported-features/node-builtins': ERROR,
-        'import/named': OFF(JAVASCRIPT),
-        'import/no-commonjs': OFF(JAVASCRIPT),
-        'import/unambiguous': OFF(JAVASCRIPT),
-        'no-console': OFF(JAVASCRIPT),
-        'node/global-require': OFF(JAVASCRIPT),
-      },
+      }
     },
   ],
   'rules': {
@@ -112,7 +79,7 @@ module.exports = {
     'no-await-in-loop': ERROR,
     'no-compare-neg-zero': ERROR,
     'no-cond-assign': ERROR,
-    'no-console': [OFF('TEMPORARY'), { 'allow': ['warn', 'error'] }],
+    'no-console': [OFF('TEMPORARY'), { allow: ['warn', 'error'] }],
     'no-constant-condition': ERROR,
     'no-control-regex': ERROR,
     'no-debugger': ERROR,
@@ -123,14 +90,14 @@ module.exports = {
     'no-empty-character-class': ERROR,
     'no-ex-assign': ERROR,
     'no-extra-boolean-cast': ERROR,
-    'no-extra-parens': TYPESCRIPT_EXTENDED,
-    'no-extra-semi': TYPESCRIPT_EXTENDED,
+    'no-extra-parens': SUCCESSOR(TYPESCRIPT_EXTENSION),
+    'no-extra-semi': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'no-func-assign': ERROR,
     'no-import-assign': ERROR,
     'no-inner-declarations': BUGGY('unknown', "doesn't play nice with namespaces https://github.com/typescript-eslint/typescript-eslint/issues/239"),
     'no-invalid-regexp': ERROR,
     'no-irregular-whitespace': ERROR,
-    'no-loss-of-precision': TYPESCRIPT_EXTENDED,
+    'no-loss-of-precision': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'no-misleading-character-class': ERROR,
     'no-obj-calls': ERROR,
     'no-promise-executor-return': ERROR,
@@ -155,25 +122,25 @@ module.exports = {
     'array-callback-return': ERROR,
     'block-scoped-var': ERROR,
     'class-methods-use-this': ERROR,
-    'complexity': [ERROR, { 'max': 50 }],
-    'consistent-return': OFF(),
+    'complexity': [ERROR, { max: 50 }],
+    'consistent-return': OFF(UNKNOWN),
     'curly': ERROR, // if you have a problem with this read https://dwheeler.com/essays/apple-goto-fail.html
     'default-case': ERROR,
     'default-case-last': ERROR,
-    'default-param-last': TYPESCRIPT_EXTENDED,
+    'default-param-last': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'dot-location': [ERROR, 'property'],
-    'dot-notation': TYPESCRIPT_EXTENDED,
+    'dot-notation': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'eqeqeq': ERROR,
     'grouped-accessor-pairs': ERROR,
     'guard-for-in': ERROR,
-    'max-classes-per-file': [WARN, 3],
+    'max-classes-per-file': [WARN(UNKNOWN), 3],
     'no-alert': ERROR,
     'no-caller': ERROR,
     'no-case-declarations': ERROR,
     'no-constructor-return': ERROR,
     'no-div-regex': ERROR,
     'no-else-return': ERROR,
-    'no-empty-function': TYPESCRIPT_EXTENDED,
+    'no-empty-function': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'no-empty-pattern': ERROR,
     'no-eq-null': ERROR,
     'no-eval': ERROR,
@@ -185,13 +152,13 @@ module.exports = {
     'no-global-assign': ERROR,
     'no-implicit-coercion': ERROR,
     'no-implicit-globals': ERROR,
-    'no-implied-eval': TYPESCRIPT_EXTENDED,
-    'no-invalid-this': TYPESCRIPT_EXTENDED,
+    'no-implied-eval': SUCCESSOR(TYPESCRIPT_EXTENSION),
+    'no-invalid-this': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'no-iterator': ERROR,
     'no-labels': ERROR,
     'no-lone-blocks': ERROR,
-    'no-loop-func': TYPESCRIPT_EXTENDED,
-    'no-magic-numbers': TYPESCRIPT_EXTENDED,
+    'no-loop-func': SUCCESSOR(TYPESCRIPT_EXTENSION),
+    'no-magic-numbers': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'no-multi-spaces': ERROR,
     'no-multi-str': ERROR,
     'no-new': ERROR,
@@ -202,7 +169,7 @@ module.exports = {
     'no-octal-escape': ERROR,
     'no-param-reassign': ERROR,
     'no-proto': ERROR,
-    'no-redeclare': TYPESCRIPT_EXTENDED,
+    'no-redeclare': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'no-restricted-properties': OFF(PROJECT_BY_PROJECT),
     'no-return-assign': ERROR,
     'no-return-await': SUCCESSOR('@typescript-eslint/return-await'),
@@ -210,9 +177,9 @@ module.exports = {
     'no-self-assign': ERROR,
     'no-self-compare': ERROR,
     'no-sequences': ERROR,
-    'no-throw-literal': TYPESCRIPT_EXTENDED,
+    'no-throw-literal': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'no-unmodified-loop-condition': ERROR,
-    'no-unused-expressions': TYPESCRIPT_EXTENDED,
+    'no-unused-expressions': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'no-unused-labels': ERROR,
     'no-useless-call': ERROR,
     'no-useless-catch': ERROR,
@@ -220,7 +187,7 @@ module.exports = {
     'no-useless-escape': ERROR,
     'no-useless-return': ERROR,
     'no-void': ERROR,
-    'no-warning-comments': OFF(),
+    'no-warning-comments': OFF(UNKNOWN),
     'no-with': ERROR,
     'prefer-named-capture-group': OFF(PROJECT_BY_PROJECT),
     'prefer-promise-reject-errors': ERROR,
@@ -236,35 +203,35 @@ module.exports = {
     'strict': OFF('TypeScript takes care of this'),
 
     // Variables
-    'init-declarations': TYPESCRIPT_EXTENDED,
+    'init-declarations': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'no-delete-var': ERROR,
     'no-label-var': ERROR,
     'no-restricted-globals': [ERROR, ...restrictedGlobals],
-    'no-shadow': TYPESCRIPT_EXTENDED,
+    'no-shadow': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'no-shadow-restricted-names': ERROR,
     'no-undef': ERROR,
     'no-undef-init': ERROR,
     'no-undefined': OFF("I look forward to a world where the problem that necessitates this rule's existence doesn't exist anymore.  Although shadowing `undefined` is super nasty, the utility of this language primitive is too strong to disable outright."),
-    'no-unused-vars': TYPESCRIPT_EXTENDED,
-    'no-use-before-define': TYPESCRIPT_EXTENDED,
-    
+    'no-unused-vars': SUCCESSOR(TYPESCRIPT_EXTENSION),
+    'no-use-before-define': SUCCESSOR(TYPESCRIPT_EXTENSION),
+
     // Stylistic Issues
     'array-bracket-newline': [ERROR, 'consistent'],
     'array-bracket-spacing': [ERROR, 'never'],
     'array-element-newline': [ERROR, 'consistent'],
     'block-spacing': ERROR,
-    'brace-style': TYPESCRIPT_EXTENDED,
+    'brace-style': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'camelcase': SUCCESSOR('@typescript-eslint/naming-convention'),
     'capitalized-comments': OFF('the reality is that to many things exist in comments that should not be bound by rules (compiler directives, jsDoc, type information, etc.)'),
-    'comma-dangle': TYPESCRIPT_EXTENDED,
-    'comma-spacing': TYPESCRIPT_EXTENDED,
+    'comma-dangle': SUCCESSOR(TYPESCRIPT_EXTENSION),
+    'comma-spacing': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'comma-style': ERROR,
     'computed-property-spacing': ERROR,
-    'consistent-this': OFF(),
+    'consistent-this': OFF(UNKNOWN),
     'eol-last': ERROR,
-    'func-call-spacing': TYPESCRIPT_EXTENDED,
+    'func-call-spacing': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'func-name-matching': ERROR,
-    'func-names': UNKNOWN, // still thinking about the implications of this one
+    'func-names': OFF(UNDECIDED), // still thinking about the implications of this one
     'func-style': [ERROR, 'declaration', { 'allowArrowFunctions': true }],
     'function-call-argument-newline': OFF('[handled by prettier] not really significant anyway'),
     'function-paren-newline': OFF(USER_DISCRETION),
@@ -281,16 +248,16 @@ module.exports = {
     }],
     'id-match': OFF(USER_DISCRETION),
     'implicit-arrow-linebreak': [ERROR, 'beside'],
-    'indent': TYPESCRIPT_EXTENDED,
+    'indent': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'jsx-quotes': ERROR,
     'key-spacing': [ERROR, { 'mode': 'minimum' }],
-    'keyword-spacing': TYPESCRIPT_EXTENDED,
+    'keyword-spacing': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'line-comment-position': OFF(USER_DISCRETION),
     'linebreak-style': [ERROR, 'unix'],
     'lines-around-comment': BUGGY('UNKNOWN', "unfortunately, this doesn't play nice with allowing comments at the start of TypeScript types and interfaces: https://github.com/typescript-eslint/typescript-eslint/issues/1933"),
-    'lines-between-class-members': TYPESCRIPT_EXTENDED,
+    'lines-between-class-members': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'max-depth': [ERROR, 7],
-    'max-len': [WARN, {
+    'max-len': [WARN(PROJECT_BY_PROJECT), {
       'code': 120,
       'ignoreStrings': true,
       'ignoreTemplateLiterals': true,
@@ -313,7 +280,7 @@ module.exports = {
     'new-cap': OFF('`new` should, these days, basically not be used'),
     'new-parens': OFF("If everyone was doing this I would go along with it, but it's borderline inconsequential since usage of `new` should be very sparing."),
     'newline-per-chained-call': ERROR,
-    'no-array-constructor': TYPESCRIPT_EXTENDED,
+    'no-array-constructor': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'no-bitwise': ERROR,
     'no-continue': OFF("Shouldn't be using labels. This encourages labels."),
     'no-inline-comments': OFF('inline comments === good.'),
@@ -321,7 +288,7 @@ module.exports = {
     'no-mixed-operators': ERROR,
     'no-mixed-spaces-and-tabs': ERROR,
     'no-multi-assign': ERROR,
-    'no-multiple-empty-lines': [WARN, { 'max': 3, 'maxBOF': 0, 'maxEOF': 0 }],
+    'no-multiple-empty-lines': [WARN(UNKNOWN), { 'max': 3, 'maxBOF': 0, 'maxEOF': 0 }],
     'no-negated-condition': ERROR,
     'no-nested-ternary': ERROR,
     'no-new-object': ERROR,
@@ -334,8 +301,8 @@ module.exports = {
     'no-unneeded-ternary': ERROR,
     'no-whitespace-before-property': ERROR,
     'nonblock-statement-body-position': OFF('not needed because the `curly` rule handles this case'),
-    'object-curly-newline': [ERROR, { minProperties: 3 }],
-    'object-curly-spacing': TYPESCRIPT_EXTENDED,
+    'object-curly-newline': OFF(USER_DISCRETION),
+    'object-curly-spacing': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'object-property-newline': OFF('this is very subject to the length of the identifiers and values'),
     'one-var': [ERROR, 'never'],
     'one-var-declaration-per-line': OFF("the `one-var` setting of 'never' ensures multi-line declarations are not allowed"),
@@ -346,16 +313,16 @@ module.exports = {
     'prefer-exponentiation-operator': ERROR,
     'prefer-object-spread': ERROR,
     'quote-props': [ERROR, 'as-needed', { 'numbers': true }], // I have at times used the `'numbers': false` option, but I have learned that some people are not aware that object keys can only ever be strings in javascript (well, or symbols, but anyway). Despite
-    'quotes': TYPESCRIPT_EXTENDED,
-    'semi': TYPESCRIPT_EXTENDED,
+    'quotes': SUCCESSOR(TYPESCRIPT_EXTENSION),
+    'semi': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'semi-spacing': ERROR,
     'semi-style': ERROR,
     'sort-keys': ERROR, // call me crazy, go ahead.  The reason I think this rule is helpful is because often junior programmers will rely on the order of object properties despite that an object is an unordered collection according to the javascript spec.  This also therefore prevents a footgun where some browsers (e.g. chrome) respect insertion order, but others (e.g. safari) do not.  I fully understand that this lint rule doesn't make such an error impossible, but it makes it difficult to do in the trivial case or at least will call a reviewer's attention by being specifically eslint-ignore'd.
     'sort-vars': ERROR, // multiple declaration is turned off anyway.
     'space-before-blocks': ERROR,
-    'space-before-function-paren': TYPESCRIPT_EXTENDED,
+    'space-before-function-paren': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'space-in-parens': ERROR,
-    'space-infix-ops': TYPESCRIPT_EXTENDED,
+    'space-infix-ops': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'space-unary-ops': ERROR,
     'spaced-comment': [ERROR, 'always', {
       'exceptions': ['/', '*', '-', '* '], // for ASCII art :)
@@ -379,15 +346,15 @@ module.exports = {
     'no-class-assign': ERROR,
     'no-confusing-arrow': [ERROR, { 'allowParens': true }],
     'no-const-assign': ERROR,
-    'no-dupe-class-members': TYPESCRIPT_EXTENDED,
+    'no-dupe-class-members': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'no-dupe-else-if': ERROR,
-    'no-duplicate-imports': TYPESCRIPT_EXTENDED,
+    'no-duplicate-imports': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'no-new-symbol': ERROR,
     'no-restricted-exports': OFF(PROJECT_BY_PROJECT),
     'no-restricted-imports': OFF(PROJECT_BY_PROJECT),
     'no-this-before-super': ERROR,
     'no-useless-computed-key': ERROR,
-    'no-useless-constructor': TYPESCRIPT_EXTENDED,
+    'no-useless-constructor': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'no-useless-rename': ERROR,
     'no-var': ERROR,
     'object-shorthand': [ERROR, 'always'],
@@ -521,7 +488,7 @@ module.exports = {
     '@typescript-eslint/prefer-function-type': OFF('Certain abstractions read clearer when documented by interfaces, even those with only one call signature.'),
     '@typescript-eslint/prefer-includes': ERROR,
     '@typescript-eslint/prefer-literal-enum-member': ERROR,
-    '@typescript-eslint/prefer-namespace-keyword': OFF(),
+    '@typescript-eslint/prefer-namespace-keyword': OFF(UNKNOWN),
     '@typescript-eslint/prefer-nullish-coalescing': ERROR,
     '@typescript-eslint/prefer-optional-chain': ERROR,
     '@typescript-eslint/prefer-readonly': ERROR, // abiding by this rule will ease transition to the private methods proposal https://github.com/tc39/proposal-private-methods which, because it's at stage 3, will be in the language
@@ -572,7 +539,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': [ERROR, { ignoreRestSiblings: true }],
     '@typescript-eslint/no-use-before-define': ERROR,
     '@typescript-eslint/no-useless-constructor': ERROR,
-    '@typescript-eslint/object-curly-spacing': [WARN, 'always', { 'arraysInObjects': true }],
+    '@typescript-eslint/object-curly-spacing': [WARN("This rule can be very intrusive.  Still investigating wither there's a better setting"), 'always', { arraysInObjects: true }],
     '@typescript-eslint/quotes': [ERROR, 'single', { 'avoidEscape': true }],
     '@typescript-eslint/require-await': ERROR,
     '@typescript-eslint/return-await': ERROR,
@@ -651,7 +618,7 @@ module.exports = {
     'react/jsx-indent': [ERROR, 2],
     'react/jsx-indent-props': [ERROR, 2],
     'react/jsx-key': ERROR,
-    'react/jsx-max-depth': [WARN, { 'max': 25 }], // this is almost useless, but not completely so I set it to a somewhat absurd maximum.  Using things like styled-components and styletron increases the jsx depth quite a bit (necessarily) in complex layouts.
+    'react/jsx-max-depth': [WARN('This is almost useless, but not completely so I set it to a somewhat absurd maximum.  Using things like styled-components and styletron increases the jsx depth quite a bit (necessarily) in complex layouts.'), { max: 25 }],
     'react/jsx-max-props-per-line': OFF('The `max-len` rule takes care of this.'),
     'react/jsx-newline': OFF('there are often arbitrary (yet, rational) reasons for having spacing in some place or another between components'),
     'react/jsx-no-bind': [ERROR, { allowArrowFunctions: true, ignoreRefs: true }],
@@ -710,7 +677,7 @@ module.exports = {
     'import/no-amd': ERROR,
     'import/no-commonjs': ERROR,
     'import/no-import-module-exports': ERROR,
-    'import/no-nodejs-modules': OFF(),
+    'import/no-nodejs-modules': OFF(UNKNOWN),
     'import/unambiguous': BUGGY('eslint-plugin-import:v2.21.1', "seems that this doesn't work with TypeScript (`d.ts`) definition files or ts files that only export TypeScript types."),
 
     // Stylistic
@@ -718,14 +685,14 @@ module.exports = {
     'import/exports-last': OFF("I see no reason exports can't be sprinkled throughout the file"),
     'import/extensions': OFF(PROJECT_BY_PROJECT),
     'import/first': ERROR,
-    'import/group-exports': OFF(`tooling should easily answer the question of "what's exported from this module".  no need to do anything the IDE does for you.`),
-    'import/max-dependencies': [WARN, { 'max': 40 }], // I _almost_ want to turn this rule off(), but setting it to a high number with a lighter infraction (a WARN) seems better.
+    'import/group-exports': OFF('tooling should easily answer the question of "what\'s exported from this module".  no need to do anything the IDE does for you.'),
+    'import/max-dependencies': [WARN('I _almost_ want to turn this rule off, but setting it to a high number with a lighter infraction (a WARN) seems better.'), { max: 40 }],
     'import/newline-after-import': ERROR,
     'import/no-anonymous-default-export': ERROR, // since I've opted to not disallow default exports entirely, it seems at least good to make them annoying to use.
     'import/no-default-export': OFF('Unfortunately some systems (e.g. Gatsby) hinge on usage of default exports.'),
     'import/no-duplicates': ERROR,
     'import/no-named-default': ERROR,
-    'import/no-named-export': OFF(),
+    'import/no-named-export': OFF(UNKNOWN),
     'import/no-namespace': OFF("typescript uses namespace imports - I'm not otherwise sure what the motivation for turning this off would be"),
     'import/no-unassigned-import': OFF('there just seem to be too may places where this has to be done'),
     'import/order': SUCCESSOR('simple-import-sort/sort'),
@@ -733,8 +700,8 @@ module.exports = {
 
     // plugin:simple-import-sort ***********************************************
     // rules URL: https://github.com/lydell/eslint-plugin-simple-import-sort
-    'simple-import-sort/exports': UNKNOWN,
-    'simple-import-sort/imports': UNKNOWN,
+    'simple-import-sort/exports': OFF(UNDECIDED),
+    'simple-import-sort/imports': OFF(UNDECIDED),
 
     // plugin:jest *************************************************************
     // rules URL: https://github.com/jest-community/eslint-plugin-jest#rules
@@ -759,11 +726,11 @@ module.exports = {
     'jest/no-large-snapshots': ERROR,
     'jest/no-mocks-import': ERROR,
     'jest/no-restricted-matchers': [ERROR, {
-      resolves: 'use `expect(await promise)` instead. Jest allows you to test a promise resolve value using `await expect().resolves`. For consistency and readability this rule bans `expect().resolves` in favor of `expect(await promise)`.',
-      toBeFalsy: 'Avoid `toBeFalsy`',
-      toBeTruthy: 'Avoid `toBeTruthy`',
-      toMatchSnapshot: "Use `toMatchInlineSnapshot()` instead in order to make snapshot tests more manageable and reviewable by writing the snapshots inline in the test file.",
-      toThrowErrorMatchingSnapshot: "Use `toThrowErrorMatchingInlineSnapshot()` instead in order to make snapshot tests more manageable and reviewableby writing the snapshots inline in the test file.",
+      'resolves': 'use `expect(await promise)` instead. Jest allows you to test a promise resolve value using `await expect().resolves`. For consistency and readability this rule bans `expect().resolves` in favor of `expect(await promise)`.',
+      'toBeFalsy': 'Avoid `toBeFalsy`',
+      'toBeTruthy': 'Avoid `toBeTruthy`',
+      'toMatchSnapshot': 'Use `toMatchInlineSnapshot()` instead in order to make snapshot tests more manageable and reviewable by writing the snapshots inline in the test file.',
+      'toThrowErrorMatchingSnapshot': 'Use `toThrowErrorMatchingInlineSnapshot()` instead in order to make snapshot tests more manageable and reviewableby writing the snapshots inline in the test file.',
     }],
     'jest/no-standalone-expect': ERROR,
     'jest/no-test-prefixes': ERROR,
@@ -799,7 +766,7 @@ module.exports = {
 
     // plugin:node *************************************************************
     // Possible Errors
-    'node/handle-callback-err': OFF(),
+    'node/handle-callback-err': OFF(UNKNOWN),
     'node/no-callback-literal': ERROR,
     'node/no-exports-assign': ERROR,
     'node/no-extraneous-import': ERROR,
@@ -812,9 +779,9 @@ module.exports = {
     'node/no-unpublished-bin': ERROR,
     'node/no-unpublished-import': BUGGY('eslint-plugin-node:v11.1.0', 'Is not aware of build'),
     'node/no-unpublished-require': ERROR,
-    'node/no-unsupported-features/es-builtins': OFF(TYPESCRIPT),
-    'node/no-unsupported-features/es-syntax': OFF(TYPESCRIPT),
-    'node/no-unsupported-features/node-builtins': OFF(TYPESCRIPT),
+    'node/no-unsupported-features/es-builtins': OFF(TYPESCRIPT_SPECIFIC),
+    'node/no-unsupported-features/es-syntax': OFF(TYPESCRIPT_SPECIFIC),
+    'node/no-unsupported-features/node-builtins': OFF(TYPESCRIPT_SPECIFIC),
     'node/process-exit-as-throw': ERROR,
     'node/shebang': ERROR,
 
@@ -822,18 +789,15 @@ module.exports = {
     'node/no-deprecated-api': ERROR,
 
     // Stylistic Issues
-    'node/callback-return': OFF(),
+    'node/callback-return': OFF(UNKNOWN),
     'node/exports-style': ERROR,
     'node/file-extension-in-import': OFF(NOT_VALUABLE),
-    'node/global-require': WARN,
+    'node/global-require': WARN(PROJECT_BY_PROJECT),
     'node/no-mixed-requires': ERROR,
-    'node/no-new-require': ERROR,
-    'node/no-path-concat': ERROR,
-    'node/no-process-env': OFF(),
-    'node/no-process-exit': ERROR,
+    'node/no-process-env': OFF(UNKNOWN),
     'node/no-restricted-import': [ERROR, ['left-pad']],
     'node/no-restricted-require': [ERROR, ['left-pad']],
-    'node/no-sync': OFF(),
+    'node/no-sync': OFF(UNKNOWN),
     'node/prefer-global/buffer': ERROR,
     'node/prefer-global/console': ERROR,
     'node/prefer-global/process': ERROR,
@@ -850,6 +814,8 @@ module.exports = {
     },
     'jest': {
       'version': 26,
-    }
+    },
   },
 };
+
+/* eslint-enable sort-keys -- keys are sorted */
