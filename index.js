@@ -16,6 +16,7 @@ const {
 } = require('eslint-config-helpers');
 
 /* eslint-disable sort-keys -- keys are sorted by plugin, then by section */
+/* eslint-disable quote-props -- better, for this exact file, to just stay consistent */
 
 /** @type { import('eslint').Linter.Config } */
 module.exports = {
@@ -66,13 +67,13 @@ module.exports = {
         'node/no-unsupported-features/es-builtins': ERROR,
         'node/no-unsupported-features/es-syntax': ERROR,
         'node/no-unsupported-features/node-builtins': ERROR,
-      }
+      },
     },
   ],
   'rules': {
     // plugin:eslint ******************************************************************
     // rules URL: https://github.com/eslint/eslint/tree/master/docs/rules
-    // Possible Errors
+    // Possible Problems
     'for-direction': ERROR,
     'getter-return': ERROR,
     'no-async-promise-executor': ERROR,
@@ -112,12 +113,13 @@ module.exports = {
     'no-unsafe-finally': ERROR,
     'no-unsafe-negation': ERROR,
     'no-unsafe-optional-chaining': ERROR,
+    'no-unused-private-class-members': ERROR,
     'no-useless-backreference': ERROR,
     'require-atomic-updates': ERROR,
     'use-isnan': ERROR,
     'valid-typeof': ERROR,
 
-    // Best Practices
+    // Suggestions
     'accessor-pairs': ERROR,
     'array-callback-return': ERROR,
     'block-scoped-var': ERROR,
@@ -190,6 +192,7 @@ module.exports = {
     'no-warning-comments': OFF(UNKNOWN),
     'no-with': ERROR,
     'prefer-named-capture-group': OFF(PROJECT_BY_PROJECT),
+    'prefer-object-has-own': ERROR,
     'prefer-promise-reject-errors': ERROR,
     'prefer-regex-literals': ERROR,
     'radix': ERROR,
@@ -238,11 +241,13 @@ module.exports = {
     'id-denylist': OFF(PROJECT_BY_PROJECT),
     'id-length': [ERROR, {
       'min': 2,
+      /* eslint-disable array-element-newline -- I want to keep these in groups */
       'exceptions': [
         'x', 'y', 'a', 'b', // commonly used in general purpose comparator functions where (definitionally, since the functions are general purpose) no better name can be given
         '_', // often used to indicate an intentionally unused variable as well as for underscore/lodash/ramda/scoreunder/etc.
         't', // commonly used in many testing frameworks
-        'i', 'j' // iterators
+        'i', 'j', // iterators
+      /* eslint-enable array-element-newline -- done */
       ],
       'properties': 'never', // sometimes there are properties in existing data (i.e. 3rd party data) you are trying to map to that you simply can't control.
     }],
@@ -309,7 +314,7 @@ module.exports = {
     'operator-assignment': ERROR, // clarity comes at the cost of disallowing terseness.
     'operator-linebreak': OFF('too many edge cases here, unfortunately'),
     'padded-blocks': OFF("there are situations where this helps and situations where it doesn't"),
-    'padding-line-between-statements': OFF(NOT_VALUABLE),
+    'padding-line-between-statements': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'prefer-exponentiation-operator': ERROR,
     'prefer-object-spread': ERROR,
     'quote-props': [ERROR, 'as-needed', { 'numbers': true }], // I have at times used the `'numbers': false` option, but I have learned that some people are not aware that object keys can only ever be strings in javascript (well, or symbols, but anyway). Despite
@@ -319,7 +324,7 @@ module.exports = {
     'semi-style': ERROR,
     'sort-keys': ERROR, // call me crazy, go ahead.  The reason I think this rule is helpful is because often junior programmers will rely on the order of object properties despite that an object is an unordered collection according to the javascript spec.  This also therefore prevents a footgun where some browsers (e.g. chrome) respect insertion order, but others (e.g. safari) do not.  I fully understand that this lint rule doesn't make such an error impossible, but it makes it difficult to do in the trivial case or at least will call a reviewer's attention by being specifically eslint-ignore'd.
     'sort-vars': ERROR, // multiple declaration is turned off anyway.
-    'space-before-blocks': ERROR,
+    'space-before-blocks': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'space-before-function-paren': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'space-in-parens': ERROR,
     'space-infix-ops': SUCCESSOR(TYPESCRIPT_EXTENSION),
@@ -350,7 +355,7 @@ module.exports = {
     'no-dupe-else-if': ERROR,
     'no-duplicate-imports': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'no-new-symbol': ERROR,
-    'no-restricted-exports': OFF(PROJECT_BY_PROJECT),
+    'no-restricted-exports': SUCCESSOR(TYPESCRIPT_EXTENSION),
     'no-restricted-imports': OFF(PROJECT_BY_PROJECT),
     'no-this-before-super': ERROR,
     'no-useless-computed-key': ERROR,
@@ -438,6 +443,7 @@ module.exports = {
     '@typescript-eslint/class-literal-property-style': ERROR,
     '@typescript-eslint/consistent-indexed-object-style': [ERROR, 'index-signature'], // index-signature is better because it allows you to provide a variable name for the key which serves as a sort of documentation of the author's intent
     '@typescript-eslint/consistent-type-assertions': ERROR,
+    '@typescript-eslint/consistent-type-exports': OFF("I don't like the idea of baking features into the language that exist solely because of shortcommings in build tooling, no matter how common those shortcomings are."),
     '@typescript-eslint/consistent-type-definitions': [ERROR, 'interface'],
     '@typescript-eslint/consistent-type-imports': OFF(NOT_VALUABLE),
     '@typescript-eslint/explicit-function-return-type': OFF('type inference is your friend.  use it'),
@@ -457,15 +463,17 @@ module.exports = {
     '@typescript-eslint/no-extraneous-class': ERROR,
     '@typescript-eslint/no-floating-promises': ERROR,
     '@typescript-eslint/no-for-in-array': ERROR,
-    '@typescript-eslint/no-implicit-any-catch': ERROR,
     '@typescript-eslint/no-inferrable-types': ERROR,
     '@typescript-eslint/no-invalid-void-type': ERROR,
+    '@typescript-eslint/no-meaningless-void-operator': ERROR,
     '@typescript-eslint/no-misused-new': ERROR,
     '@typescript-eslint/no-misused-promises': ERROR,
     '@typescript-eslint/no-namespace': ERROR,
     '@typescript-eslint/no-non-null-asserted-optional-chain': ERROR,
+    '@typescript-eslint/no-non-null-asserted-nullish-coalescing': ERROR, // the non-null assertion is a scourage
     '@typescript-eslint/no-non-null-assertion': ERROR, // I'll quote a friend (who is a better programmer than I am) about the non null assertion: "I wish I never learnd of its existence."  Indeed, I view this character as a member of the same family as `any` and `@ts-ignore`.
     '@typescript-eslint/no-parameter-properties': ERROR,
+    '@typescript-eslint/no-redundant-type-constituents': ERROR,
     '@typescript-eslint/no-require-imports': ERROR,
     '@typescript-eslint/no-this-alias': ERROR,
     '@typescript-eslint/no-type-alias': OFF('The absence of Opaque types in TypeScript is the only remaining feature I miss from FlowType.  Until such a thing is implemented some day (and we seem to get closer every major release) I will continue to use aliases for primitive types.'),
@@ -481,7 +489,7 @@ module.exports = {
     '@typescript-eslint/no-unsafe-member-access': ERROR,
     '@typescript-eslint/no-unsafe-return': ERROR,
     '@typescript-eslint/no-var-requires': ERROR,
-    '@typescript-eslint/non-nullable-type-assertion-style': OFF("using non-null assertions cancels the benefits of the strict null-checking mode.."),
+    '@typescript-eslint/non-nullable-type-assertion-style': OFF('using non-null assertions cancels the benefits of the strict null-checking mode..'),
     '@typescript-eslint/prefer-as-const': ERROR,
     '@typescript-eslint/prefer-enum-initializers': ERROR,
     '@typescript-eslint/prefer-for-of': ERROR,
@@ -534,17 +542,21 @@ module.exports = {
     '@typescript-eslint/no-loss-of-precision': ERROR,
     '@typescript-eslint/no-magic-numbers': BUGGY('unknown', 'sounds good in theory, but works poorly in practice'),
     '@typescript-eslint/no-redeclare': ERROR,
+    '@typescript-eslint/no-restricted-imports': OFF(PROJECT_BY_PROJECT),
     '@typescript-eslint/no-shadow': OFF(NOT_VALUABLE),
     '@typescript-eslint/no-throw-literal': ERROR,
     '@typescript-eslint/no-unused-expressions': ERROR,
     '@typescript-eslint/no-unused-vars': [ERROR, { ignoreRestSiblings: true }],
     '@typescript-eslint/no-use-before-define': ERROR,
     '@typescript-eslint/no-useless-constructor': ERROR,
+    '@typescript-eslint/no-useless-empty-export': ERROR,
     '@typescript-eslint/object-curly-spacing': [WARN("This rule can be very intrusive.  Still investigating wither there's a better setting"), 'always', { arraysInObjects: true }],
+    '@typescript-eslint/padding-line-between-statements': OFF(NOT_VALUABLE),
     '@typescript-eslint/quotes': [ERROR, 'single', { 'avoidEscape': true }],
     '@typescript-eslint/require-await': ERROR,
     '@typescript-eslint/return-await': ERROR,
     '@typescript-eslint/semi': ERROR,
+    '@typescript-eslint/space-before-blocks': ERROR,
     '@typescript-eslint/space-before-function-paren': [ERROR, { anonymous: 'never', named: 'never', asyncArrow: 'always' }],
     '@typescript-eslint/space-infix-ops': ERROR,
 
@@ -561,9 +573,12 @@ module.exports = {
     'react/forbid-foreign-prop-types': ERROR,
     'react/forbid-prop-types': OFF('TypeScript fills this void'),
     'react/function-component-definition': [ERROR, { namedComponents: 'arrow-function', unnamedComponents: 'arrow-function' }],
+    'react/iframe-missing-sandbox': ERROR,
+    'react/hook-use-state': ERROR,
     'react/no-access-state-in-setstate': ERROR,
     'react/no-adjacent-inline-elements': OFF(NOT_VALUABLE),
     'react/no-array-index-key': ERROR,
+    'react/no-arrow-function-lifecycle': ERROR,
     'react/no-children-prop': ERROR,
     'react/no-danger': ERROR,
     'react/no-danger-with-children': ERROR,
@@ -572,8 +587,10 @@ module.exports = {
     'react/no-did-update-set-state': [ERROR, 'disallow-in-func'],
     'react/no-direct-mutation-state': ERROR,
     'react/no-find-dom-node': ERROR,
+    'react/no-invalid-html-attribute': ERROR,
     'react/no-is-mounted': ERROR,
     'react/no-multi-comp': OFF("I find this pattern useful. It's one of those things that needs to be left up to discretion."),
+    'react/no-namespace': ERROR,
     'react/no-redundant-should-component-update': ERROR,
     'react/no-render-return-value': ERROR,
     'react/no-set-state': OFF("While enabling this rule should be most project's goal, it's not always ideal (for fast and frequently updating UI, for example) to go through redux for _every_ single thing."),
@@ -584,10 +601,12 @@ module.exports = {
     'react/no-unknown-property': ERROR,
     'react/no-unsafe': ERROR,
     'react/no-unstable-nested-components': ERROR,
+    'react/no-unused-class-component-methods': ERROR,
     'react/no-unused-prop-types': ERROR,
     'react/no-unused-state': ERROR,
     'react/no-will-update-set-state': [ERROR, 'disallow-in-func'],
     'react/prefer-es6-class': ERROR,
+    'react/prefer-exact-props': OFF('this is for FLow or PropTypes'),
     'react/prefer-read-only-props': ERROR,
     'react/prefer-stateless-function': ERROR,
     'react/prop-types': OFF('TypeScript handles this.'),
@@ -609,7 +628,7 @@ module.exports = {
     'react/jsx-closing-bracket-location': ERROR,
     'react/jsx-closing-tag-location': ERROR,
     'react/jsx-curly-brace-presence': ERROR,
-    'react/jsx-curly-newline': OFF(`Reasonable people disagree but I think this can be left up to the developer, although I don't feel strongly.  If there was a "if the first predicate is x number of characters long" option, I would feel differently.`),
+    'react/jsx-curly-newline': OFF('Reasonable people disagree but I think this can be left up to the developer, although I don\'t feel strongly.  If there was a "if the first predicate is x number of characters long" option, I would feel differently.'),
     'react/jsx-curly-spacing': ERROR,
     'react/jsx-equals-spacing': ERROR,
     'react/jsx-filename-extension': [ERROR, { 'extensions': ['.jsx', '.tsx'] }],
@@ -708,11 +727,11 @@ module.exports = {
     // rules URL: https://github.com/jest-community/eslint-plugin-jest#rules
     'jest/consistent-test-it': ERROR,
     'jest/expect-expect': ERROR,
-    'jest/lowercase-name': ERROR,
     'jest/max-nested-describe': ERROR,
     'jest/no-alias-methods': ERROR,
     'jest/no-commented-out-tests': ERROR,
     'jest/no-conditional-expect': ERROR,
+    'jest/no-conditional-in-test': ERROR, // This is harsh.  Yes.  I know.  However a colleague I respect very much (who is passionate about this topic) as convinced me that this is worth the extra cost
     'jest/no-deprecated-functions': ERROR,
     'jest/no-disabled-tests': OFF('I think having the ability to use .skip is legitimate'),
     'jest/no-done-callback': ERROR,
@@ -721,7 +740,6 @@ module.exports = {
     'jest/no-focused-tests': ERROR,
     'jest/no-hooks': ERROR,
     'jest/no-identical-title': ERROR,
-    'jest/no-if': ERROR,
     'jest/no-interpolation-in-snapshots': ERROR,
     'jest/no-jasmine-globals': ERROR,
     'jest/no-jest-import': ERROR,
@@ -738,22 +756,29 @@ module.exports = {
     'jest/no-test-prefixes': ERROR,
     'jest/no-test-return-statement': ERROR,
     'jest/prefer-called-with': ERROR,
+    'jest/prefer-comparison-matcher': ERROR,
+    'jest/prefer-equality-matcher': ERROR,
     'jest/prefer-expect-assertions': OFF(NOT_VALUABLE),
+    'jest/prefer-expect-resolves': ERROR,
     'jest/prefer-hooks-on-top': ERROR,
+    'jest/prefer-lowercase-title': OFF("this is a slippery slope.  there are too many legit situations, and although some of the options attempt a solution at this, I don't find the supposed readability hit to be really worth having this rule"),
+    'jest/prefer-snapshot-hint': ERROR, // Although Jest always appends a number at the end of a snapshot name, short descriptive hints might be more useful than numbers to differentiate multiple snapshots in a single it or test block.
     'jest/prefer-spy-on': ERROR,
     'jest/prefer-strict-equal': ERROR,
-    'jest/prefer-to-be-null': ERROR,
-    'jest/prefer-to-be-undefined': ERROR,
+    'jest/prefer-to-be': ERROR,
     'jest/prefer-to-contain': ERROR,
     'jest/prefer-to-have-length': ERROR,
     'jest/prefer-todo': ERROR,
+    'jest/require-hook': OFF(PROJECT_BY_PROJECT),
     'jest/require-to-throw-message': ERROR,
     'jest/require-top-level-describe': ERROR,
-    'jest/valid-describe': ERROR,
+    'jest/valid-describe-callback': ERROR,
     'jest/valid-expect': ERROR,
     'jest/valid-expect-in-promise': ERROR,
-    'jest/unbound-method': OFF('I have not yet hit a situation where this matters, and it requires telling eslint which files are jest files which I would very much like to avoid'),
     'jest/valid-title': ERROR,
+
+    // TypeScript
+    'jest/unbound-method': OFF("unfortunately, for this rule to function you must tell eslint a glob pattern for your tests and that's just not realistic since it can be really different even in packages in the same monorepo"),
 
     // plugin:jest-formatting **************************************************
     // rules URL: https://github.com/dangreenisrael/eslint-plugin-jest-formatting#rule-documentation
@@ -821,3 +846,4 @@ module.exports = {
 };
 
 /* eslint-enable sort-keys -- keys are sorted */
+/* eslint-enable quote-props -- whole file */
