@@ -68,6 +68,7 @@
       }
     ],
     "no-constant-condition": "error",
+    "no-constant-binary-expression": "error",
     "no-control-regex": "error",
     "no-debugger": "error",
     "no-dupe-args": "error",
@@ -91,6 +92,7 @@
     "no-irregular-whitespace": "error",
     "no-loss-of-precision": "off",
     "no-misleading-character-class": "error",
+    "no-new-native-nonconstructor": "error",
     "no-obj-calls": "error",
     "no-promise-executor-return": "error",
     "no-prototype-builtins": "error",
@@ -132,6 +134,7 @@
     "eqeqeq": "error",
     "grouped-accessor-pairs": "error",
     "guard-for-in": "error",
+    "logical-assignment-operators": "error",
     "max-classes-per-file": [
       "warn",
       3
@@ -144,6 +147,7 @@
     "no-else-return": "error",
     "no-empty-function": "off",
     "no-empty-pattern": "error",
+    "no-empty-static-block": "error",
     "no-eq-null": "error",
     "no-eval": "error",
     "no-extend-native": "error",
@@ -285,7 +289,7 @@
       "error",
       "consistent"
     ],
-    "block-spacing": "error",
+    "block-spacing": "off",
     "brace-style": "off",
     "camelcase": "off",
     "capitalized-comments": "off",
@@ -607,16 +611,17 @@
       }
     ],
     "@typescript-eslint/class-literal-property-style": "error",
+    "@typescript-eslint/consistent-generic-constructors": "error",
     "@typescript-eslint/consistent-indexed-object-style": [
       "error",
       "index-signature"
     ],
     "@typescript-eslint/consistent-type-assertions": "error",
-    "@typescript-eslint/consistent-type-exports": "off",
     "@typescript-eslint/consistent-type-definitions": [
       "error",
       "interface"
     ],
+    "@typescript-eslint/consistent-type-exports": "off",
     "@typescript-eslint/consistent-type-imports": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-member-accessibility": "off",
@@ -628,6 +633,8 @@
     "@typescript-eslint/no-base-to-string": "error",
     "@typescript-eslint/no-confusing-non-null-assertion": "error",
     "@typescript-eslint/no-confusing-void-expression": "error",
+    "@typescript-eslint/no-duplicate-enum-values": "error",
+    "@typescript-eslint/no-duplicate-type-constituents": "error",
     "@typescript-eslint/no-dynamic-delete": "error",
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/no-explicit-any": "off",
@@ -635,16 +642,17 @@
     "@typescript-eslint/no-extraneous-class": "error",
     "@typescript-eslint/no-floating-promises": "error",
     "@typescript-eslint/no-for-in-array": "error",
+    "@typescript-eslint/no-import-type-side-effects": "error",
     "@typescript-eslint/no-inferrable-types": "error",
     "@typescript-eslint/no-invalid-void-type": "error",
     "@typescript-eslint/no-meaningless-void-operator": "error",
     "@typescript-eslint/no-misused-new": "error",
     "@typescript-eslint/no-misused-promises": "error",
+    "@typescript-eslint/no-mixed-enums": "error",
     "@typescript-eslint/no-namespace": "error",
-    "@typescript-eslint/no-non-null-asserted-optional-chain": "error",
     "@typescript-eslint/no-non-null-asserted-nullish-coalescing": "error",
+    "@typescript-eslint/no-non-null-asserted-optional-chain": "error",
     "@typescript-eslint/no-non-null-assertion": "error",
-    "@typescript-eslint/no-parameter-properties": "error",
     "@typescript-eslint/no-redundant-type-constituents": "error",
     "@typescript-eslint/no-require-imports": "error",
     "@typescript-eslint/no-this-alias": "error",
@@ -658,10 +666,13 @@
     "@typescript-eslint/no-unsafe-argument": "error",
     "@typescript-eslint/no-unsafe-assignment": "error",
     "@typescript-eslint/no-unsafe-call": "error",
+    "@typescript-eslint/no-unsafe-declaration-merging": "error",
+    "@typescript-eslint/no-unsafe-enum-comparison": "error",
     "@typescript-eslint/no-unsafe-member-access": "error",
     "@typescript-eslint/no-unsafe-return": "error",
     "@typescript-eslint/no-var-requires": "error",
     "@typescript-eslint/non-nullable-type-assertion-style": "off",
+    "@typescript-eslint/parameter-properties": "error",
     "@typescript-eslint/prefer-as-const": "error",
     "@typescript-eslint/prefer-enum-initializers": "error",
     "@typescript-eslint/prefer-for-of": "error",
@@ -687,7 +698,7 @@
     ],
     "@typescript-eslint/restrict-plus-operands": "error",
     "@typescript-eslint/restrict-template-expressions": "off",
-    "@typescript-eslint/sort-type-union-intersection-members": "error",
+    "@typescript-eslint/sort-type-constituents": "error",
     "@typescript-eslint/strict-boolean-expressions": "error",
     "@typescript-eslint/switch-exhaustiveness-check": "error",
     "@typescript-eslint/triple-slash-reference": "error",
@@ -695,6 +706,7 @@
     "@typescript-eslint/typedef": "off",
     "@typescript-eslint/unbound-method": "error",
     "@typescript-eslint/unified-signatures": "error",
+    "@typescript-eslint/block-spacing": "error",
     "@typescript-eslint/brace-style": [
       "error",
       "1tbs"
@@ -715,7 +727,9 @@
       }
     ],
     "@typescript-eslint/init-declarations": "off",
+    "@typescript-eslint/key-spacing": "error",
     "@typescript-eslint/keyword-spacing": "error",
+    "@typescript-eslint/lines-around-comment": "off",
     "@typescript-eslint/lines-between-class-members": [
       "error",
       "always",
@@ -725,7 +739,6 @@
     ],
     "@typescript-eslint/no-array-constructor": "error",
     "@typescript-eslint/no-dupe-class-members": "error",
-    "@typescript-eslint/no-duplicate-imports": "error",
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-extra-parens": "off",
     "@typescript-eslint/no-extra-semi": "error",
@@ -817,6 +830,7 @@
     "react/no-is-mounted": "error",
     "react/no-multi-comp": "off",
     "react/no-namespace": "error",
+    "react/no-object-type-as-default-prop": "error",
     "react/no-redundant-should-component-update": "error",
     "react/no-render-return-value": "error",
     "react/no-set-state": "off",
@@ -845,6 +859,7 @@
     "react/require-render-return": "error",
     "react/self-closing-comp": "error",
     "react/sort-comp": "off",
+    "react/sort-default-props": "error",
     "react/sort-prop-types": "error",
     "react/state-in-constructor": [
       "error",
@@ -906,6 +921,7 @@
     "react/jsx-no-comment-textnodes": "error",
     "react/jsx-no-constructed-context-values": "error",
     "react/jsx-no-duplicate-props": "error",
+    "react/jsx-no-leaked-render": "error",
     "react/jsx-no-literals": "off",
     "react/jsx-no-script-url": "error",
     "react/jsx-no-target-blank": "error",
@@ -915,7 +931,6 @@
     "react/jsx-pascal-case": "error",
     "react/jsx-props-no-multi-spaces": "error",
     "react/jsx-props-no-spreading": "error",
-    "react/jsx-sort-default-props": "error",
     "react/jsx-sort-props": "error",
     "react/jsx-tag-spacing": "error",
     "react/jsx-uses-react": "error",
@@ -940,6 +955,7 @@
     "import/no-webpack-loader-syntax": "off",
     "import/export": "error",
     "import/no-deprecated": "error",
+    "import/no-empty-named-blocks": "error",
     "import/no-extraneous-dependencies": "off",
     "import/no-mutable-exports": "error",
     "import/no-named-as-default": "error",
@@ -949,6 +965,7 @@
     "import/no-import-module-exports": "error",
     "import/no-nodejs-modules": "off",
     "import/unambiguous": "off",
+    "import/consistent-type-specifier-style": "error",
     "import/dynamic-import-chunkname": "error",
     "import/exports-last": "off",
     "import/extensions": "off",
@@ -974,6 +991,7 @@
     "simple-import-sort/imports": "off",
     "jest/consistent-test-it": "error",
     "jest/expect-expect": "error",
+    "jest/max-expects": "error",
     "jest/max-nested-describe": "error",
     "jest/no-alias-methods": "error",
     "jest/no-commented-out-tests": "error",
@@ -989,9 +1007,9 @@
     "jest/no-identical-title": "error",
     "jest/no-interpolation-in-snapshots": "error",
     "jest/no-jasmine-globals": "error",
-    "jest/no-jest-import": "error",
     "jest/no-large-snapshots": "error",
     "jest/no-mocks-import": "error",
+    "jest/no-restricted-jest-methods": "error",
     "jest/no-restricted-matchers": [
       "error",
       {
@@ -1005,13 +1023,17 @@
     "jest/no-standalone-expect": "error",
     "jest/no-test-prefixes": "error",
     "jest/no-test-return-statement": "error",
+    "jest/no-untyped-mock-factory": "error",
     "jest/prefer-called-with": "error",
     "jest/prefer-comparison-matcher": "error",
+    "jest/prefer-each": "error",
     "jest/prefer-equality-matcher": "error",
     "jest/prefer-expect-assertions": "off",
     "jest/prefer-expect-resolves": "error",
+    "jest/prefer-hooks-in-order": "error",
     "jest/prefer-hooks-on-top": "error",
     "jest/prefer-lowercase-title": "off",
+    "jest/prefer-mock-promise-shorthand": "error",
     "jest/prefer-snapshot-hint": "error",
     "jest/prefer-spy-on": "error",
     "jest/prefer-strict-equal": "error",
@@ -1085,10 +1107,10 @@
   },
   "settings": {
     "react": {
-      "version": "16.8"
+      "version": "18.0"
     },
     "jest": {
-      "version": 26
+      "version": 29
     }
   }
 }
