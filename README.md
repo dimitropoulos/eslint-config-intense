@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="Lerna" src="./eslint in tents.jpg" width="480">
+  <img alt="Lerna" src="./eslint in tents.png" width="480">
 </p>
 
 # eslint-config-intense
